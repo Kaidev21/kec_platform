@@ -167,7 +167,7 @@ async function apply() {
 .tabs { display: flex; gap: .3rem; button { background: rgba(20,12,7,.4); border: 1px solid var(--kec-border); color: var(--kec-text-muted); padding: .55rem 1rem; border-radius: 999px; font-weight: 700; font-size: .84rem; &.on { background: var(--kec-cowrie); color: #2a1a12; } } }
 .day { display: grid; gap: .8rem; h3 { display: flex; align-items: center; gap: .6rem; margin: 0; font-size: 1.05rem; color: var(--kec-sand); text-transform: capitalize; small { padding: .05rem .5rem; border-radius: 99px; background: rgba(214,165,72,.2); color: var(--kec-gold-soft); font-size: .72rem; } &::after { content: ''; flex: 1; height: 1px; background: var(--kec-border); } } }
 .cards { display: grid; gap: .9rem; @include lg-up { grid-template-columns: 1fr 1fr; } }
-.dlink { align-self: center; font-size: .8rem; font-weight: 700; margin-left: auto; }
+.dlink { align-self: center; font-size: .8rem; font-weight: 700; margin-inline-start: auto; }
 .empty { padding: 2rem; text-align: center; border: 1px dashed var(--kec-border); border-radius: 16px; }
 .modal-form { display: grid; gap: 1rem; .who { margin: 0; font-size: .9rem; em { color: var(--kec-gold-soft); } } }
 </style>

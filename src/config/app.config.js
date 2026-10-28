@@ -16,7 +16,7 @@ export const APP_CONFIG = Object.freeze({
     assistantName: 'Manu AI',
     suggestionBoxName: 'Kopen Mind',
     investorChannelName: 'Kia',
-    fellowSpaceName: 'Connexion'
+    fellowSpaceName: 'Mon espace'
   },
 
   program: {
@@ -41,7 +41,7 @@ export const APP_CONFIG = Object.freeze({
   /** Messagerie interne : SLA de réponse humaine (§3) et réponses types */
   messaging: {
     slaHours: 4,
-    kinds: ['manu', 'consultant', 'dossier', 'payment', 'support'],
+    kinds: ['manu', 'consultant', 'consultation', 'dossier', 'payment', 'support'],
     priorities: ['normal', 'high', 'urgent']
   },
 
@@ -110,11 +110,25 @@ export const APP_CONFIG = Object.freeze({
     { code: 'fr', label: 'Français', flag: 'FR', enabled: true },
     { code: 'en', label: 'English', flag: 'EN', enabled: true },
     { code: 'de', label: 'Deutsch', flag: 'DE', enabled: true },
-    // Prêtes à activer : créer src/i18n/locales/<code>.json puis passer enabled à true
-    { code: 'sw', label: 'Kiswahili', flag: 'SW', enabled: false },
-    { code: 'es', label: 'Español', flag: 'ES', enabled: false },
-    { code: 'zh', label: '中文', flag: 'ZH', enabled: false }
+    { code: 'es', label: 'Español', flag: 'ES', enabled: true },
+    { code: 'ru', label: 'Русский', flag: 'RU', enabled: true },
+    { code: 'ln', label: 'Lingála', flag: 'LN', enabled: true, intl: 'fr-FR' }, // pas de données CLDR fiables : formats français
+    { code: 'sw', label: 'Kiswahili', flag: 'SW', enabled: true },
+    { code: 'pt', label: 'Português', flag: 'PT', enabled: true },
+    { code: 'zh', label: '中文', flag: 'ZH', enabled: true },
+    { code: 'ar', label: 'العربية', flag: 'AR', enabled: true, dir: 'rtl' }
   ],
+  /** Réseaux sociaux du pied de page : les liens sont à fournir par la cliente (question Q6) */
+  socials: [
+    { id: 'whatsapp', label: 'WhatsApp', url: '' },
+    { id: 'linkedin', label: 'LinkedIn', url: '' },
+    { id: 'facebook', label: 'Facebook', url: '' },
+    { id: 'instagram', label: 'Instagram', url: '' },
+    { id: 'tiktok', label: 'TikTok', url: '' },
+    { id: 'wechat', label: 'WeChat', url: '' },
+    { id: 'douyin', label: 'Douyin 抖音', url: '' }
+  ],
+  contact: { email: 'mbote@kec-africa.com', cities: ['Douala', 'Yaoundé', 'Bafoussam'] },
   defaultLocale: 'fr'
 })
 

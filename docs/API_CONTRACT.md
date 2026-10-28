@@ -58,10 +58,18 @@ publication de l'évènement temps réel `payment.succeeded`.
 | POST | `/suggestions` | `{ message, category, contact? }` | `Suggestion` |
 |---|---|---|---|
 
+## Demande de consultation (« Un consultant, quand vous voulez »)
+Ouverte à tout visiteur, sans compte. Le serveur crée un fil `consultation` pour
+l'équipe (statut `open`, délai de rappel 24 h ouvrées suivi comme les autres fils),
+une entrée d'audit, et renvoie une référence lisible.
+
+| POST | `/public/consultation-requests` | `{ name, country?, phone?, email?, need, channel: 'whatsapp'\|'call'\|'email', consent: true, locale, userId?, page? }` | `{ reference: 'DC-2026-0001', threadId }` — 400 si `consent` absent ou ni `phone` ni `email` |
+|---|---|---|---|
+
 ## Messagerie (fellows ↔ équipe)
 | GET | `/threads/me` | — | `Thread[]` (sans notes internes) |
 |---|---|---|---|
-| GET | `/threads/:id` | — | `Thread` — `{ id, kind: 'manu'\|'consultant'\|'dossier'\|'payment'\|'support', subject, status: 'open'\|'pending'\|'closed', priority, assignee?, tags[], slaDueAt, messages: [{ id, from: 'fellow'\|'staff'\|'manu'\|'system', author, text, at, internal? }] }` |
+| GET | `/threads/:id` | — | `Thread` — `{ id, kind: 'manu'\|'consultant'\|'dossier'\|'payment'\|'support'\|'consultation', subject, reference?, contact?: { name, phone, email, country, channel }, status: 'open'\|'pending'\|'closed', priority, assignee?, tags[], slaDueAt, messages: [{ id, from: 'fellow'\|'staff'\|'manu'\|'system', author, text, at, internal? }] }` |
 | POST | `/threads` | `{ kind, subject, text }` | `Thread` |
 | POST | `/threads/:id/messages` | `{ text, internal? }` (`internal` réservé à l'équipe) | `Thread` |
 | POST | `/threads/:id/read` | `{ viewer: 'fellow'\|'staff' }` | `Thread` |
@@ -70,15 +78,24 @@ publication de l'évènement temps réel `payment.succeeded`.
 | GET | `/backoffice/canned-replies` | — | `[{ id, label, text }]` |
 
 ## Manu AI
-| POST | `/assistant/welcome` | `{ locale, name }` | `{ text, quickReplies: [{ id, label }], route? }` |
+| POST | `/assistant/welcome` | `{ locale, name }` | `{ text, quickReplies: [{ id, label }], route?, locale }` |
 |---|---|---|---|
-| POST | `/assistant/messages` | `{ message, state, transcript[], userId?, page? }` | `{ reply: { text, quickReplies, route?, escalated?, reason?, transferred? }, state }` — 503 `DEGRADED` si mode dégradé |
-| GET | `/assistant/settings` | — | `AssistantSettings` — `{ version, displayName, tone, greetingOverride: { fr, en, de }, escalation: { tax, social, criminal, litigation, urgent, personalAdvice }, extraEscalationKeywords[], missesThreshold, slaHours, quickRepliesEnabled, homeTeaser, offHoursNotice, workingHours: { start, end }, logRetentionDays, degradedMode, updatedAt, updatedBy, history[] }` |
+| POST | `/assistant/messages` | `{ message, state: { locale, replyLocale?, misses, sessionId }, transcript[], userId?, page? }` | `{ reply: { text, quickReplies, route?, escalated?, reason?, transferred?, locale }, state: { ..., replyLocale } }` — 503 `DEGRADED` si mode dégradé |
+| GET | `/assistant/settings` | — | `AssistantSettings` — `{ version, displayName, tone, greetingOverride: { [locale]: string } (une entrée par langue activée), escalation: { tax, social, criminal, litigation, urgent, personalAdvice }, extraEscalationKeywords[], missesThreshold, slaHours, quickRepliesEnabled, homeTeaser, offHoursNotice, workingHours: { start, end }, logRetentionDays, degradedMode, updatedAt, updatedBy, history[] }` |
 | PUT | `/assistant/settings` | `{ ...patch, note? }` | `AssistantSettings` (version incrémentée, audit) |
-| GET | `/assistant/knowledge` | — | `{ catalog: [{ id, keywords[], responses: { fr, en, de } }], overrides: { intents: { [id]: { extraKeywords[], responses, disabled } } }, escalationRules[] }` |
+| GET | `/assistant/knowledge` | — | `{ catalog: [{ id, keywords[], responses: { [locale]: string } }], overrides: { intents: { [id]: { extraKeywords[], responses, disabled } } }, escalationRules[] }` |
 | PATCH | `/assistant/knowledge/:intentId` | `{ extraKeywords?, responses?, disabled? }` | `overrides` |
 | GET | `/assistant/report?days=30` | — | `{ total, sessions, escalated, escalationRate, fallback, understoodRate, autonomousRate, avgResponseMs, fellowShare, intents[], reasons[], locales[], pages[], byDay[], unanswered[], openThreads, slaBreaches, avgHumanResponseH }` |
 | GET | `/assistant/logs?limit=&intent=&q=` | — | `[{ id, at, sessionId, locale, role: 'visitor'\|'fellow', userMessage, intent, escalated, reason?, misses, responseMs, page }]` |
+
+**Langue de réponse.** Manu répond dans la langue du message reçu (`reply.locale`),
+détectée côté serveur (le mock utilise une heuristique par écriture et mots-outils) ;
+à défaut, dans `state.replyLocale` (langue de la conversation en cours) puis `state.locale`
+(langue de l'interface). Les dix langues de `APP_CONFIG.locales` doivent être couvertes.
+**Voix.** La dictée et la lecture à voix haute sont faites dans le navigateur (Web Speech
+API) et n'appellent pas le serveur ; un moteur vocal serveur (langues sans voix système,
+accents locaux) est prévu dans un lot ultérieur et passera par les mêmes routes avec
+un champ `audio` optionnel.
 
 Le backend (LLM + base documentaire versionnée) doit appliquer les garde-fous du cahier
 des charges §7 : aucune recommandation juridique individualisée, escalade obligatoire

@@ -14,7 +14,7 @@ async function logout() { await auth.logout(); router.push({ name: 'home' }) }
   <div class="kia">
     <header class="kia-top">
       <RouterLink to="/" class="brand"><KecLogo :size="32" :tagline="false" /></RouterLink>
-      <span class="channel">Kia</span>
+      <span class="channel" :title="$t('kia.fullName')">Kia <small>· KEC Invest Again</small></span>
       <div class="r">
         <LangSwitcher />
         <button type="button" class="out" :aria-label="$t('app.logout')" @click="logout">⎋</button>
@@ -31,8 +31,8 @@ async function logout() { await auth.logout(); router.push({ name: 'home' }) }
   background: rgba(26, 17, 11, .85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--kec-border);
 }
 .brand { color: inherit; }
-.channel { font-family: var(--font-display); font-style: italic; font-size: 1.3rem; color: var(--kec-gold); padding-left: .75rem; border-left: 1px solid var(--kec-border); }
-.r { margin-left: auto; display: flex; gap: .5rem; align-items: center; }
+.channel { font-family: var(--font-display); font-style: italic; font-size: 1.3rem; color: var(--kec-gold); padding-inline-start: .75rem; border-inline-start: 1px solid var(--kec-border); small { font-family: var(--font-body); font-style: normal; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--kec-text-muted); display: none; @include sm-up { display: inline; } } }
+.r { margin-inline-start: auto; display: flex; gap: .5rem; align-items: center; }
 .out { background: none; border: 1px solid var(--kec-border); color: var(--kec-ivory); border-radius: 50%; width: 36px; height: 36px; }
 .kia-main { width: min(1100px, 100%); margin: 0 auto; padding: 1rem; @include md-up { padding: 2rem; } }
 </style>

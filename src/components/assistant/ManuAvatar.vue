@@ -53,5 +53,5 @@ defineProps({ size: { type: Number, default: 56 }, online: { type: Boolean, defa
 svg { width: 100%; height: 100%; border-radius: 50%; }
 .eyes { animation: blink 5s infinite; transform-origin: 50px 53px; }
 @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
-.status { position: absolute; right: 2%; bottom: 4%; width: 24%; height: 24%; border-radius: 50%; background: #8fbf5a; border: 2px solid #1a110b; }
+.status { position: absolute; inset-inline-end: 2%; bottom: 4%; width: 24%; height: 24%; border-radius: 50%; background: #8fbf5a; border: 2px solid #1a110b; }
 </style>

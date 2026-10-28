@@ -69,7 +69,20 @@ export const router = createRouter({
   routes,
   scrollBehavior(to, _from, saved) {
     if (saved) return saved
-    if (to.hash) return { el: to.hash, behavior: 'smooth', top: 80 }
+    if (to.hash) {
+      /* La transition de page est « out-in » : la page suivante n'est pas encore dans le DOM au moment
+         où le routeur veut défiler. On attend que la cible existe (et quelques images de plus pour
+         que la mise en page se stabilise) avant de défiler jusqu'à la section. */
+      return new Promise((resolve) => {
+        let tries = 0
+        const tick = () => {
+          const found = document.querySelector(to.hash)
+          if ((found && tries >= 4) || tries > 40) resolve(found ? { el: to.hash, behavior: 'smooth', top: 80 } : { top: 0 })
+          else { tries++; setTimeout(tick, 80) }
+        }
+        tick()
+      })
+    }
     return { top: 0 }
   }
 })

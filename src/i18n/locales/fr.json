@@ -20,21 +20,24 @@
     "connexion": "Connexion",
     "mySpace": "Mon espace",
     "menu": "Menu",
-    "language": "Langue"
+    "language": "Langue",
+    "homeLabel": "Accueil",
+    "journey": "Le parcours"
   },
   "footer": {
-    "mission": "La porte d'entrée digitale et juridique de l'entrepreneur africain. Créer, formaliser, grandir — accompagné.",
+    "mission": "La porte d'entrée digitale et juridique de l'entrepreneur africain. Créer, formaliser, grandir, accompagné.",
     "explore": "Explorer",
     "spaces": "Espaces",
-    "fellows": "Connexion · les 110",
+    "fellows": "Mon espace · clients",
     "kia": "Kia · investisseurs",
     "team": "Équipe KEC",
     "contact": "Contact",
-    "disclaimer": "KEC fournit des informations générales et un accompagnement ; pas de conseil juridique individualisé en ligne."
+    "disclaimer": "KEC fournit des informations générales et un accompagnement ; pas de conseil juridique individualisé en ligne.",
+    "follow": "Nous suivre"
   },
   "home": {
     "hero": {
-      "eyebrow": "K-Enterprise Counsel · Cameroun · OHADA",
+      "eyebrow": "K-Enterprise Counsel · Afrique",
       "title1": "Votre entreprise, enracinée en Afrique.",
       "title2": "Ouverte au monde.",
       "lead": "Créer, formaliser puis développer votre entreprise, avec un accompagnement humain, des prix transparents et vos documents à l'abri dans un coffre-fort juridique.",
@@ -46,11 +49,22 @@
     "globe": {
       "eyebrow": "Le monde tourne",
       "title": "Et l'Afrique est au centre.",
-      "text": "D'où que vous soyez — Douala, Paris, Berlin, Montréal — votre projet trouve son chemin vers la maison. KEC relie la diaspora et les entrepreneurs locaux à une même ambition : bâtir ici, durablement.",
-      "fellows": "fellows dans la cohorte pilote",
-      "months": "mois d'accompagnement",
-      "regions": "régions + l'étape d'Edéa",
-      "ohada": "pays de l'espace OHADA en ligne de mire"
+      "text": "Où que vous soyez : New York, Berlin, Paris, Montréal, Moscou, Amsterdam, Rome… votre projet trouve son chemin vers la maison. KEC relie la diaspora et les entrepreneurs locaux autour d'une même ambition : bâtir ici, durablement.",
+      "facts": {
+        "countries": "pays d'Afrique, un seul guichet",
+        "ohada": "pays de l'espace OHADA en ligne de mire",
+        "cities": "villes de la diaspora reliées",
+        "languages": "langues d'accueil"
+      },
+      "card": {
+        "hint": "Survolez ou touchez un pays : il rougit et se présente.",
+        "create": "Créer ici",
+        "close": "Fermer la fiche",
+        "default": "KEC vous accompagne ici : création, formalisation, suivi juridique.",
+        "ohada": "Membre OHADA",
+        "toValidate": "Repère à valider par KEC"
+      },
+      "aria": "Globe terrestre interactif centré sur l'Afrique"
     },
     "services": {
       "eyebrow": "Ce que nous faisons pour vous",
@@ -58,34 +72,34 @@
       "lead": "Une plateforme pensée pour les petites et moyennes entreprises, appuyée sur une vraie équipe.",
       "items": {
         "create": {
-          "title": "Créer",
+          "title": "Créer votre dossier",
           "text": "Choisissez votre pays, votre ville, votre forme juridique. On vous guide pas à pas, devis total affiché avant tout."
         },
         "formalize": {
-          "title": "Formaliser",
+          "title": "Formaliser votre structure",
           "text": "Statuts, RCCM, pièces : vous remplissez un formulaire dédié, nous rédigeons et suivons le dossier."
         },
         "grow": {
-          "title": "Développer",
+          "title": "Développer votre activité",
           "text": "Formation, suivi post-création et intégration au réseau d'entreprises KEC."
         },
         "vault": {
           "title": "Coffre-fort juridique",
-          "text": "Tous vos documents chiffrés, au même endroit. Compte certifié à la fin du programme."
+          "text": "Tous vos documents chiffrés, au même endroit. Compte entreprise certifié KEC."
         },
         "manu": {
           "title": "Manu AI",
-          "text": "Une réceptionniste qui vous accueille jour et nuit, vous oriente, et passe la main à un humain quand il le faut."
+          "text": "Une réceptionniste qui vous accueille jour et nuit, vous oriente, et passe la main à un professionnel du droit quand il le faut."
         },
         "consultant": {
-          "title": "Un consultant, à l'heure",
+          "title": "Un consultant, quand vous voulez",
           "text": "Besoin d'un avis ? Réservez un consultant KEC et payez par MoMo, Orange Money ou virement."
         }
       }
     },
     "journey": {
-      "eyebrow": "Le parcours",
-      "title": "Sept perles sur un même fil.",
+      "eyebrow": "Sept perles sur un même fil",
+      "title": "Le parcours SCALE 110",
       "steps": [
         "Diagnostic",
         "Formation intensive",
@@ -99,12 +113,11 @@
     "program": {
       "eyebrow": "Programme pilote · SCALE 110",
       "title": "110 places. Pas une de plus.",
-      "text": "Avant le lancement national, nous accompagnons une première cohorte de 110 entrepreneurs pendant 6 mois. Tout le monde peut s'inscrire ; l'équipe choisit les 110 parmi la liste d'attente.",
+      "text": "Avant le lancement à grande échelle, nous accompagnons une première cohorte de 110 entrepreneurs pendant 6 mois. Tout le monde peut s'inscrire ; KEC choisit les 110 fellows parmi la liste d'attente.",
       "points": {
         "selection": "Sélection sur dossier parmi les inscrits de la salle d'attente",
         "duration": "6 mois d'incubation et d'accompagnement humain",
-        "certification": "Compte entreprise certifié et visible à l'issue du programme",
-        "price": "Tarif programme : {price} par entreprise"
+        "certification": "Compte entreprise certifié et visible à l'issue du programme"
       },
       "cta": "Je prends mon ticket",
       "deadline": "Inscriptions pré-pilote ouvertes jusqu'en décembre."
@@ -112,17 +125,17 @@
     "nostalgia": {
       "eyebrow": "Pour ceux qui sont loin",
       "title": "La maison ne vous a pas oublié.",
-      "text": "L'odeur de la terre après la première pluie. Le café du matin chez la grand-mère. Les voix sous l'arbre à palabres. Vous êtes parti depuis longtemps ? Votre entreprise, elle, peut naître ici — et vous ramener un peu chez vous.",
+      "text": "L'odeur de la terre après la première pluie. Le café du matin chez la grand-mère. Les voix sous l'arbre à palabres. Vous êtes parti depuis longtemps ? Votre entreprise, elle, peut naître ici, et vous ramener un peu chez vous.",
       "cta": "Revenir par la grande porte"
     }
   },
   "waiting": {
     "eyebrow": "Salle d'attente · pré-pilote",
-    "title": "Akwaba ! Asseyez-vous, le café arrive.",
-    "manuHello": "Bienvenue chez nous. Ici, on ne fait pas la queue debout : on s'assoit, on se sert un café, et on raconte son projet. Je garde votre place.",
-    "manuServed": "Voilà votre café, bien chaud. Prenez votre temps pour remplir la fiche, on n'est pas pressés ici.",
-    "serve": "Servir le café",
-    "coffeeAria": "Bouilloire émaillée et tasse en terre cuite",
+    "title": "Akwaba ! Asseyez-vous, on vous sert quelque chose.",
+    "manuHello": "Chez nous en Afrique, on ne reçoit pas les gens les mains vides. On vous prend quoi à boire ? Thé ? Café ? Vin blanc ?",
+    "manuServed": "Prenez votre temps pour remplir la fiche, on n'est pas pressés ici.",
+    "serve": "Servir",
+    "coffeeAria": "Bouilloire émaillée, tasse en terre cuite et offrandes de bienvenue",
     "waitingNow": "dans la salle",
     "seats": "places du pilote",
     "today": "arrivés aujourd'hui",
@@ -130,12 +143,30 @@
     "formTitle": "Votre fiche d'accueil",
     "formLead": "Trois petites étapes, moins de trois minutes. Ensuite, vous recevez votre ticket.",
     "proverbs": [
+      "Une seule main n'attache pas le koki.",
       "Si tu veux aller vite, marche seul ; si tu veux aller loin, marchons ensemble.",
       "Petit à petit, l'oiseau fait son nid.",
       "La patience est un arbre dont la racine est amère, mais dont les fruits sont très doux.",
       "Un seul bracelet ne tinte pas.",
       "C'est au bout de l'ancienne corde qu'on tisse la nouvelle."
-    ]
+    ],
+    "chooseDrink": "Choisir ce qu'on vous sert",
+    "offerings": {
+      "coffee": "Café",
+      "tea": "Thé",
+      "peanuts": "Arachides bouillies",
+      "wine": "Vin blanc",
+      "cola": "Cola"
+    },
+    "served": {
+      "coffee": "Voilà votre café, bien chaud.",
+      "tea": "Voilà votre thé, bien chaud.",
+      "peanuts": "Voilà des arachides bouillies, encore fumantes.",
+      "wine": "Voilà un verre de vin blanc, bien frais.",
+      "cola": "Voilà une noix de cola : on la partage, comme il se doit."
+    },
+    "proverbFrom": "Proverbe · {origin}",
+    "proverbAfrica": "Afrique"
   },
   "waitlist": {
     "steps": {
@@ -310,12 +341,18 @@
     "restart": "Nouvelle conversation",
     "escalated": "Transmis à un humain de l'équipe · réponse sous 4 h ouvrées",
     "disclaimer": "Manu donne des informations générales, jamais de conseil juridique individualisé.",
-    "unavailable": "Je n'arrive pas à répondre pour le moment. Votre parcours continue normalement, et vous pouvez joindre un consultant via la barre en bas de l'écran."
+    "unavailable": "Je n'arrive pas à répondre pour le moment. Votre parcours continue normalement, et vous pouvez joindre un consultant via la barre en bas de l'écran.",
+    "mic": "Parler à Manu",
+    "micStop": "Arrêter la dictée",
+    "listening": "Je vous écoute…",
+    "micUnsupported": "La dictée vocale n'est pas disponible sur ce navigateur.",
+    "voiceOn": "Lire les réponses à voix haute",
+    "voiceOff": "Couper la voix",
+    "voiceUnsupported": "La lecture à voix haute n'est pas disponible sur cet appareil."
   },
   "consultant": {
     "barAria": "Parler à un consultant",
     "barQuestion": "Voulez-vous parler à l'un de nos consultants ?",
-    "barRate": "{rate} / heure pour discuter avec un conseiller",
     "barCta": "Cliquez ici",
     "eyebrow": "Consultants KEC",
     "lead": "Un vrai humain, qui connaît le terrain. Choisissez votre conseiller, votre créneau, et payez en toute simplicité.",
@@ -338,11 +375,34 @@
       "corporate": "Droit des sociétés",
       "tax": "Fiscalité",
       "investment": "Investissement & diaspora"
+    },
+    "request": {
+      "title": "Que pouvons-nous faire pour vous ?",
+      "lead": "Dites-nous brièvement ce qui vous préoccupe ; un consultant vous contactera sous peu.",
+      "name": "Prénom et nom",
+      "country": "Pays",
+      "phone": "Téléphone ou WhatsApp",
+      "email": "E-mail",
+      "need": "Votre besoin, en quelques lignes",
+      "needPh": "Ex. : je veux ouvrir une boutique à Dakar avec ma sœur qui vit à Bruxelles…",
+      "channel": "Comment préférez-vous être contacté ?",
+      "channels": {
+        "whatsapp": "WhatsApp",
+        "call": "Appel",
+        "email": "E-mail"
+      },
+      "consent": "J'accepte que KEC utilise ces informations pour me recontacter.",
+      "hint": "Réponse d'un consultant KEC sous 24 h ouvrées. Le tarif de la consultation vous est indiqué avant tout engagement.",
+      "send": "Envoyer ma demande",
+      "sentTitle": "Merci, {name} !",
+      "sent": "Un consultant KEC vous recontacte sous 24 h ouvrées, par {channel}. Numéro de demande : {ref}.",
+      "fellowHint": "Vous êtes connecté : réservez directement un créneau avec le consultant de votre choix.",
+      "book": "Réserver un consultant"
     }
   },
   "kopen": {
     "title": "Des suggestions à nous faire pour notre amélioration ?",
-    "lead": "Laissez un message ici. Chaque mot glissé dans la boîte est lu par l'équipe — c'est comme ça qu'on grandit ensemble.",
+    "lead": "Laissez un message ici. Chaque mot glissé dans la boîte est lu par l'équipe : c'est comme ça qu'on grandit ensemble.",
     "category": "Type de message",
     "placeholder": "Votre idée, votre remarque, votre coup de cœur…",
     "contact": "Votre e-mail ou téléphone (facultatif)",
@@ -368,12 +428,12 @@
     "toggle": "Afficher / masquer le mot de passe",
     "demo": "Démo :",
     "fill": "Remplir",
-    "notFellow": "Pas encore parmi les 110 ?",
+    "notFellow": "Pas encore client KEC ?",
     "joinWaitlist": "Prenez votre ticket dans la salle d'attente.",
     "fellow": {
       "eyebrow": "Connexion",
-      "title": "L'espace des 110",
-      "lead": "Réservé aux fellows de la cohorte pilote : votre dossier, votre coffre-fort, votre progression.",
+      "title": "Mon espace",
+      "lead": "Votre dossier, votre coffre-fort, vos consultants et votre progression, au même endroit.",
       "quote": "Cent dix cauris, cent dix histoires d'entreprises."
     },
     "staff": {
@@ -390,7 +450,7 @@
     }
   },
   "app": {
-    "fellowSpace": "Connexion · Fellows",
+    "fellowSpace": "Mon espace",
     "staffSpace": "Équipe KEC",
     "logout": "Se déconnecter",
     "nav": {
@@ -407,7 +467,8 @@
       "appointments": "Rendez-vous",
       "manu": "Manu AI",
       "team": "Équipe & rôles"
-    }
+    },
+    "fellowOf": "Fellow #{n} / 110"
   },
   "cert": {
     "month": "Mois {n}",
@@ -683,7 +744,8 @@
         "personalAdvice": "Conseil personnalisé",
         "humanRequested": "Demande d'un humain",
         "notUnderstood": "Incompréhension",
-        "booking": "Réservation"
+        "booking": "Réservation",
+        "consultationRequest": "Demande de consultation"
       },
       "conversations": "conversations",
       "search": "Rechercher un nom, un objet, un mot…",
@@ -771,7 +833,7 @@
       "totalPaid": "Total encaissé"
     },
     "manu": {
-      "lead": "Tout ce qui se passe sur l'assistant : volumes, escalades, langues, paramètres et base de connaissances — sans redéploiement.",
+      "lead": "Tout ce qui se passe sur l'assistant : volumes, escalades, langues, paramètres et base de connaissances, sans redéploiement.",
       "tabs": {
         "report": "Rapport",
         "settings": "Paramètres",
@@ -877,14 +939,15 @@
         "kopen": "Kopen Mind",
         "fallback": "Non compris",
         "escalate": "Escalade",
-        "transfer": "Transfert humain"
+        "transfer": "Transfert humain",
+        "consultation": "Demande de consultation"
       }
     }
   },
   "kia": {
     "live": "En direct",
-    "hello": "Bonjour {name}",
-    "lead": "Le pouls de KEC, en temps réel : qui s'inscrit, et ce qui entre.",
+    "hello": "Cher investisseur, bonjour {name}.",
+    "lead": "Voici le pouls de KEC en temps réel : qui rejoint la salle d'attente, et ce qui entre.",
     "waitlist": "Inscrits liste d'attente",
     "today": "aujourd'hui",
     "goal": "Objectif pré-lancement : {n}",
@@ -903,7 +966,8 @@
     "newSignup": "Nouvelle inscription : {name} · {city}",
     "newPayment": "L'argent entre : {amount}",
     "newFellow": "{name} rejoint les 110 !",
-    "mockNote": "Mode démonstration : des inscriptions simulées arrivent toutes les quelques secondes. Ouvrez la salle d'attente dans un autre onglet pour voir vos propres inscriptions apparaître ici."
+    "mockNote": "Mode démonstration : des inscriptions simulées arrivent toutes les quelques secondes. Ouvrez la salle d'attente dans un autre onglet pour voir vos propres inscriptions apparaître ici.",
+    "fullName": "Kia · KEC Invest Again"
   },
   "validation": {
     "required": "Ce champ est requis.",
@@ -947,7 +1011,8 @@
       "consultant": "Consultant",
       "dossier": "Mon dossier",
       "payment": "Paiement",
-      "support": "Assistance"
+      "support": "Assistance",
+      "consultation": "Demande de consultation"
     },
     "status": {
       "open": "À traiter",

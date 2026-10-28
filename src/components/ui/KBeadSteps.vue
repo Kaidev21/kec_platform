@@ -33,7 +33,7 @@ const emit = defineEmits(['go'])
 <style scoped lang="scss">
 .beads { list-style: none; display: flex; padding: 0; margin: 0 0 2rem; position: relative; gap: 0; overflow-x: auto; scrollbar-width: none; }
 .beads::before {
-  content: ''; position: absolute; left: 22px; right: 22px; top: 21px; height: 2px;
+  content: ''; position: absolute; inset-inline-start: 22px; inset-inline-end: 22px; top: 21px; height: 2px;
   background: repeating-linear-gradient(90deg, var(--kec-taupe) 0 6px, transparent 6px 10px); opacity: .5;
 }
 .bead { flex: 1; min-width: 76px; position: relative; display: flex; justify-content: center; }

@@ -352,6 +352,13 @@ function buildThreads(now, team, users) {
       ]
     }),
     thread({
+      kind: 'consultation', subject: 'DC-2026-0001 · Je veux ouvrir une boulangerie à Bafoussam avec mon frère', fellowName: 'Marthe Kuété', status: 'open', assigneeId: null, reason: 'consultationRequest', tags: ['consultation', 'FR', 'whatsapp'], createdAgoH: 2, unreadStaff: 1,
+      messages: (t) => [
+        msg('fellow', 'Marthe Kuété', 'Je veux ouvrir une boulangerie à Bafoussam avec mon frère qui vit à Lyon. On ne sait pas quelle forme choisir ni comment il peut être associé à distance.', t),
+        msg('system', 'KEC', 'Demande de consultation DC-2026-0001 reçue depuis /. Contact : +237 6 99 00 00 00 · marthe.k@example.com · Cameroun. Canal souhaité : WhatsApp. Rappel attendu sous 24 h ouvrées.', t + 1000)
+      ]
+    }),
+    thread({
       kind: 'manu', subject: 'Visiteur : « je comprends pas comment faire depuis l\'Allemagne »', fellowName: 'Visiteur (Berlin)', status: 'open', assigneeId: 'tm_weber', reason: 'notUnderstood', tags: ['diaspora', 'DE'], createdAgoH: 1.5, unreadStaff: 1,
       messages: (t) => [
         msg('fellow', 'Visiteur', 'ich bin in berlin, wie geht das genau mit der firma', t - 6 * 60000),
@@ -459,7 +466,7 @@ function buildAssistantSettings(now) {
     id: 'assistant',
     displayName: 'Manu AI',
     tone: 'warm', // warm | formal | concise
-    greetingOverride: { fr: '', en: '', de: '' },
+    greetingOverride: Object.fromEntries(APP_CONFIG.locales.map((l) => [l.code, ''])),
     missesThreshold: 3,
     slaHours: APP_CONFIG.messaging.slaHours,
     escalation: { tax: true, social: true, criminal: true, litigation: true, urgent: true, personalAdvice: true },

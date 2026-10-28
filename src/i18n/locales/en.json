@@ -20,21 +20,24 @@
     "connexion": "Sign in",
     "mySpace": "My space",
     "menu": "Menu",
-    "language": "Language"
+    "language": "Language",
+    "homeLabel": "Home",
+    "journey": "The journey"
   },
   "footer": {
-    "mission": "The digital and legal gateway for African entrepreneurs. Create, formalise, grow — with people by your side.",
+    "mission": "The digital and legal gateway for African entrepreneurs. Create, formalise, grow, with people by your side.",
     "explore": "Explore",
     "spaces": "Spaces",
-    "fellows": "Connexion · the 110",
+    "fellows": "My space · clients",
     "kia": "Kia · investors",
     "team": "KEC team",
     "contact": "Contact",
-    "disclaimer": "KEC provides general information and support; no individual legal advice is given online."
+    "disclaimer": "KEC provides general information and support; no individual legal advice is given online.",
+    "follow": "Follow us"
   },
   "home": {
     "hero": {
-      "eyebrow": "K-Enterprise Counsel · Cameroon · OHADA",
+      "eyebrow": "K-Enterprise Counsel · Africa",
       "title1": "Your business, rooted in Africa.",
       "title2": "Open to the world.",
       "lead": "Create, formalise and grow your company with human support, transparent pricing, and your documents safe in a legal vault.",
@@ -45,12 +48,23 @@
     },
     "globe": {
       "eyebrow": "The world turns",
-      "title": "And Africa is at its heart.",
-      "text": "Wherever you are — Douala, Paris, Berlin, Montréal — your project finds its way home. KEC connects the diaspora and local entrepreneurs around one ambition: building here, to last.",
-      "fellows": "fellows in the pilot cohort",
-      "months": "months of support",
-      "regions": "regions + the Edéa stop",
-      "ohada": "OHADA countries on the horizon"
+      "title": "And Africa is at the centre.",
+      "text": "Wherever you are: New York, Berlin, Paris, Montréal, Moscow, Amsterdam, Rome… your project finds its way home. KEC connects the diaspora and local entrepreneurs around one ambition: building here, to last.",
+      "facts": {
+        "countries": "African countries, one single desk",
+        "ohada": "OHADA countries in our sights",
+        "cities": "diaspora cities connected",
+        "languages": "languages to welcome you"
+      },
+      "card": {
+        "hint": "Hover or tap a country: it turns red and introduces itself.",
+        "create": "Create here",
+        "close": "Close the card",
+        "default": "KEC supports you here: incorporation, formalisation, legal follow-up.",
+        "ohada": "OHADA member",
+        "toValidate": "Fact to be validated by KEC"
+      },
+      "aria": "Interactive globe centred on Africa"
     },
     "services": {
       "eyebrow": "What we do for you",
@@ -58,34 +72,34 @@
       "lead": "A platform designed for small and medium-sized businesses, backed by a real team.",
       "items": {
         "create": {
-          "title": "Create",
+          "title": "Create your file",
           "text": "Pick your country, city and legal form. We guide you step by step, with the full quote shown upfront."
         },
         "formalize": {
-          "title": "Formalise",
+          "title": "Formalise your structure",
           "text": "Articles, RCCM, documents: you fill in one dedicated form, we draft and track the file."
         },
         "grow": {
-          "title": "Grow",
+          "title": "Grow your business",
           "text": "Training, post-incorporation follow-up and a place in the KEC business network."
         },
         "vault": {
           "title": "Legal vault",
-          "text": "All your documents encrypted in one place. Certified account at the end of the programme."
+          "text": "All your documents, encrypted, in one place. KEC-certified company account."
         },
         "manu": {
           "title": "Manu AI",
-          "text": "A receptionist who welcomes you day and night, points the way, and hands over to a human when needed."
+          "text": "A receptionist who welcomes you day and night, guides you, and hands over to a legal professional when needed."
         },
         "consultant": {
-          "title": "A consultant, by the hour",
+          "title": "A consultant, whenever you want",
           "text": "Need advice? Book a KEC consultant and pay with MoMo, Orange Money or bank transfer."
         }
       }
     },
     "journey": {
-      "eyebrow": "The journey",
-      "title": "Seven beads on one string.",
+      "eyebrow": "Seven pearls on one thread",
+      "title": "The SCALE 110 journey",
       "steps": [
         "Diagnosis",
         "Intensive training",
@@ -99,12 +113,11 @@
     "program": {
       "eyebrow": "Pilot programme · SCALE 110",
       "title": "110 seats. Not one more.",
-      "text": "Before the national launch, we're supporting a first cohort of 110 entrepreneurs for 6 months. Anyone can sign up; the team selects the 110 from the waiting list.",
+      "text": "Before the large-scale launch, we support a first cohort of 110 entrepreneurs for 6 months. Anyone can sign up; KEC picks the 110 fellows from the waiting list.",
       "points": {
         "selection": "Selection based on applications from the waiting room",
         "duration": "6 months of incubation and human support",
-        "certification": "Certified, visible company account at the end of the programme",
-        "price": "Programme fee: {price} per company"
+        "certification": "Certified, visible company account at the end of the programme"
       },
       "cta": "Take my ticket",
       "deadline": "Pre-pilot sign-ups open until December."
@@ -112,17 +125,17 @@
     "nostalgia": {
       "eyebrow": "For those far away",
       "title": "Home has not forgotten you.",
-      "text": "The smell of the earth after the first rain. Morning coffee at grandma's. Voices under the palaver tree. Been away for a long time? Your company can be born here — and bring you a little closer to home.",
+      "text": "The smell of the earth after the first rain. Morning coffee at grandma's. Voices under the palaver tree. Been away for a long time? Your company can be born here, and bring you a little closer to home.",
       "cta": "Come back through the front door"
     }
   },
   "waiting": {
     "eyebrow": "Waiting room · pre-pilot",
-    "title": "Akwaba! Have a seat, coffee's coming.",
-    "manuHello": "Welcome to our home. Here we don't queue standing up: we sit, pour a coffee and tell our story. I'll keep your seat.",
-    "manuServed": "Here's your coffee, nice and hot. Take your time with the form — nobody's in a hurry here.",
-    "serve": "Pour the coffee",
-    "coffeeAria": "Enamel kettle and terracotta cup",
+    "title": "Akwaba! Have a seat, we'll serve you something.",
+    "manuHello": "Here in Africa, we never welcome people empty-handed. What can we get you to drink? Tea? Coffee? White wine?",
+    "manuServed": "Take your time with the form; nobody's in a hurry here.",
+    "serve": "Serve",
+    "coffeeAria": "Enamel kettle, clay cup and welcome offerings",
     "waitingNow": "in the room",
     "seats": "pilot seats",
     "today": "arrived today",
@@ -130,12 +143,30 @@
     "formTitle": "Your welcome card",
     "formLead": "Three short steps, under three minutes. Then you get your ticket.",
     "proverbs": [
+      "One hand alone cannot tie the koki.",
       "If you want to go fast, go alone; if you want to go far, go together.",
       "Little by little, the bird builds its nest.",
       "Patience is a tree with bitter roots but very sweet fruit.",
       "A single bracelet does not jingle.",
       "The new rope is woven at the end of the old one."
-    ]
+    ],
+    "chooseDrink": "Choose what we serve you",
+    "offerings": {
+      "coffee": "Coffee",
+      "tea": "Tea",
+      "peanuts": "Boiled peanuts",
+      "wine": "White wine",
+      "cola": "Kola nut"
+    },
+    "served": {
+      "coffee": "Here's your coffee, nice and hot.",
+      "tea": "Here's your tea, nice and hot.",
+      "peanuts": "Here are some boiled peanuts, still steaming.",
+      "wine": "Here's a glass of white wine, nicely chilled.",
+      "cola": "Here's a kola nut: we share it, as tradition goes."
+    },
+    "proverbFrom": "Proverb · {origin}",
+    "proverbAfrica": "Africa"
   },
   "waitlist": {
     "steps": {
@@ -310,12 +341,18 @@
     "restart": "New conversation",
     "escalated": "Passed to a human on the team · reply within 4 business hours",
     "disclaimer": "Manu gives general information, never individual legal advice.",
-    "unavailable": "I can't answer right now. Your journey continues as normal, and you can reach a consultant from the bar at the bottom of the screen."
+    "unavailable": "I can't answer right now. Your journey continues as normal, and you can reach a consultant from the bar at the bottom of the screen.",
+    "mic": "Talk to Manu",
+    "micStop": "Stop dictation",
+    "listening": "I'm listening…",
+    "micUnsupported": "Voice dictation is not available in this browser.",
+    "voiceOn": "Read replies aloud",
+    "voiceOff": "Mute voice",
+    "voiceUnsupported": "Read-aloud is not available on this device."
   },
   "consultant": {
     "barAria": "Talk to a consultant",
     "barQuestion": "Would you like to talk to one of our consultants?",
-    "barRate": "{rate} / hour to chat with an advisor",
     "barCta": "Click here",
     "eyebrow": "KEC consultants",
     "lead": "A real person who knows the ground. Pick your advisor and slot, and pay simply.",
@@ -338,11 +375,34 @@
       "corporate": "Company law",
       "tax": "Tax",
       "investment": "Investment & diaspora"
+    },
+    "request": {
+      "title": "What can we do for you?",
+      "lead": "Tell us briefly what's on your mind; a consultant will contact you shortly.",
+      "name": "First and last name",
+      "country": "Country",
+      "phone": "Phone or WhatsApp",
+      "email": "E-mail",
+      "need": "Your need, in a few lines",
+      "needPh": "E.g. I want to open a shop in Dakar with my sister who lives in Brussels…",
+      "channel": "How would you like to be contacted?",
+      "channels": {
+        "whatsapp": "WhatsApp",
+        "call": "Phone call",
+        "email": "E-mail"
+      },
+      "consent": "I agree that KEC uses this information to get back to me.",
+      "hint": "A KEC consultant replies within 24 business hours. The consultation fee is shown before any commitment.",
+      "send": "Send my request",
+      "sentTitle": "Thank you, {name}!",
+      "sent": "A KEC consultant will get back to you within 24 business hours, by {channel}. Request number: {ref}.",
+      "fellowHint": "You are signed in: book a slot directly with the consultant of your choice.",
+      "book": "Book a consultant"
     }
   },
   "kopen": {
     "title": "Any suggestions to help us improve?",
-    "lead": "Leave a message here. Every note slipped into the box is read by the team — that's how we grow together.",
+    "lead": "Leave a message here. Every note slipped into the box is read by the team: that's how we grow together.",
     "category": "Message type",
     "placeholder": "Your idea, remark, or what you loved…",
     "contact": "Your email or phone (optional)",
@@ -368,12 +428,12 @@
     "toggle": "Show / hide password",
     "demo": "Demo:",
     "fill": "Fill in",
-    "notFellow": "Not one of the 110 yet?",
+    "notFellow": "Not a KEC client yet?",
     "joinWaitlist": "Take your ticket in the waiting room.",
     "fellow": {
       "eyebrow": "Connexion",
-      "title": "The space of the 110",
-      "lead": "For pilot-cohort fellows only: your file, your vault, your progress.",
+      "title": "My space",
+      "lead": "Your file, your vault, your consultants and your progress, all in one place.",
       "quote": "One hundred and ten cowries, one hundred and ten business stories."
     },
     "staff": {
@@ -390,7 +450,7 @@
     }
   },
   "app": {
-    "fellowSpace": "Connexion · Fellows",
+    "fellowSpace": "My space",
     "staffSpace": "KEC team",
     "logout": "Sign out",
     "nav": {
@@ -407,7 +467,8 @@
       "appointments": "Appointments",
       "manu": "Manu AI",
       "team": "Team & roles"
-    }
+    },
+    "fellowOf": "Fellow #{n} / 110"
   },
   "cert": {
     "month": "Month {n}",
@@ -537,7 +598,7 @@
     "transferTitle": "Transfer details",
     "beneficiary": "Beneficiary",
     "reference": "Reference to include",
-    "transferHint": "Your payment will be confirmed on receipt (24–72 h). Remember to include the reference.",
+    "transferHint": "Your payment will be confirmed on receipt (24-72 h). Remember to include the reference.",
     "success": "Payment received, thank you!",
     "receipt": "Receipt no. {n} · reference {ref}",
     "failed": "The payment didn't go through. Try again or use another method.",
@@ -683,7 +744,8 @@
         "personalAdvice": "Personal advice",
         "humanRequested": "Asked for a human",
         "notUnderstood": "Not understood",
-        "booking": "Booking"
+        "booking": "Booking",
+        "consultationRequest": "Consultation request"
       },
       "conversations": "conversations",
       "search": "Search a name, a subject, a word…",
@@ -771,7 +833,7 @@
       "totalPaid": "Total collected"
     },
     "manu": {
-      "lead": "Everything happening on the assistant: volumes, escalations, languages, settings and knowledge base — without redeploying.",
+      "lead": "Everything happening on the assistant: volumes, escalations, languages, settings and knowledge base, without redeploying.",
       "tabs": {
         "report": "Report",
         "settings": "Settings",
@@ -877,14 +939,15 @@
         "kopen": "Kopen Mind",
         "fallback": "Not understood",
         "escalate": "Escalation",
-        "transfer": "Human handover"
+        "transfer": "Human handover",
+        "consultation": "Consultation request"
       }
     }
   },
   "kia": {
     "live": "Live",
-    "hello": "Hello {name}",
-    "lead": "KEC's pulse in real time: who signs up, and what comes in.",
+    "hello": "Dear investor, hello {name}.",
+    "lead": "Here is KEC's pulse in real time: who joins the waiting room, and what comes in.",
     "waitlist": "Waiting-list sign-ups",
     "today": "today",
     "goal": "Pre-launch goal: {n}",
@@ -903,7 +966,8 @@
     "newSignup": "New sign-up: {name} · {city}",
     "newPayment": "Money in: {amount}",
     "newFellow": "{name} joins the 110!",
-    "mockNote": "Demo mode: simulated sign-ups arrive every few seconds. Open the waiting room in another tab to see your own sign-ups appear here."
+    "mockNote": "Demo mode: simulated sign-ups arrive every few seconds. Open the waiting room in another tab to see your own sign-ups appear here.",
+    "fullName": "Kia · KEC Invest Again"
   },
   "validation": {
     "required": "This field is required.",
@@ -947,7 +1011,8 @@
       "consultant": "Consultant",
       "dossier": "My file",
       "payment": "Payment",
-      "support": "Support"
+      "support": "Support",
+      "consultation": "Consultation request"
     },
     "status": {
       "open": "Awaiting reply",

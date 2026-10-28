@@ -90,10 +90,10 @@ watch(() => props.thread.messages.length, async () => { await nextTick(); scroll
 .row { display: flex; gap: .6rem; align-items: flex-end; max-width: 86%; &.mine { align-self: flex-end; flex-direction: row-reverse; } &.from-system { align-self: center; max-width: 100%; } }
 .ava { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: .66rem; font-weight: 800; color: #2a1a12;
   &.fellow { background: radial-gradient(circle at 35% 30%, #fff1c9, #d6a548); } &.staff { background: radial-gradient(circle at 35% 30%, #f0b49b, #c0612f); color: #fff; } }
-.bubble { padding: .6rem .9rem; border-radius: 16px; background: #3d2819; border: 1px solid rgba(233, 201, 131, .14); border-bottom-left-radius: 4px;
+.bubble { padding: .6rem .9rem; border-radius: 16px; background: #3d2819; border: 1px solid rgba(233, 201, 131, .14); border-end-start-radius: 4px;
   header { display: flex; gap: .5rem; align-items: baseline; margin-bottom: .2rem; strong { font-size: .78rem; color: var(--kec-gold-soft); } small { font-size: .68rem; color: var(--kec-text-muted); } em { font-size: .66rem; color: #e9c983; font-style: normal; padding: 0 .4rem; border: 1px dashed rgba(233,201,131,.4); border-radius: 99px; } }
   p { margin: 0; font-size: .92rem; line-height: 1.5; white-space: pre-line; } }
-.mine .bubble { background: var(--kec-cowrie); color: #2a1a12; border-bottom-left-radius: 16px; border-bottom-right-radius: 4px; header strong { color: #7a4a22; } header small { color: #7a6a52; } }
+.mine .bubble { background: var(--kec-cowrie); color: #2a1a12; border-end-start-radius: 16px; border-end-end-radius: 4px; header strong { color: #7a4a22; } header small { color: #7a6a52; } }
 .from-manu .bubble { background: linear-gradient(135deg, #3d2819, #4a2e1c); }
 .from-system .bubble { background: none; border: 1px dashed var(--kec-border); text-align: center; p { font-size: .8rem; color: var(--kec-text-muted); } .sys-time { font-size: .66rem; color: var(--kec-text-muted); } }
 .internal .bubble { background: rgba(214, 165, 72, .12); border: 1px dashed rgba(214, 165, 72, .5); color: var(--kec-ivory); header strong { color: var(--kec-gold-soft); } }

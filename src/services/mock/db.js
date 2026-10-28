@@ -11,7 +11,7 @@
  */
 import { buildSeed } from './seed'
 
-const STORAGE_KEY = 'kec.mockdb.v3' // incrémenter quand la forme du seed change
+const STORAGE_KEY = 'kec.mockdb.v4' // incrémenter quand la forme du seed change
 
 function load() {
   try {

@@ -26,6 +26,11 @@ export const useAssistantStore = defineStore('assistant', () => {
 
   const push = (from, payload) => messages.value.push({ id: `${Date.now()}${Math.random()}`, from, at: new Date().toISOString(), ...payload })
 
+  // Changement de langue de l'interface : Manu suit, jusqu'au prochain message écrit dans une autre langue
+  watch(() => i18n.global.locale.value, () => { state.value = { ...state.value, replyLocale: null } })
+  /** Langue dans laquelle Manu parle en ce moment (pour le micro et la voix) */
+  const speakingLocale = () => state.value.replyLocale ?? i18n.global.locale.value
+
   async function greet() {
     if (messages.value.length) return
     const auth = useAuthStore()
@@ -61,5 +66,5 @@ export const useAssistantStore = defineStore('assistant', () => {
 
   function reset() { messages.value = []; state.value = { misses: 0, sessionId: `s_${Date.now().toString(36)}` } }
 
-  return { messages, typing, unread, greet, send, reset }
+  return { messages, typing, unread, greet, send, reset, speakingLocale }
 })

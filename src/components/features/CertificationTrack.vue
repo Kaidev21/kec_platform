@@ -47,7 +47,7 @@ const pct = computed(() => Math.round((elapsed.value / months) * 100))
 
 <style scoped lang="scss">
 .string { position: relative; display: grid; grid-template-columns: repeat(6, 1fr) auto; align-items: center; gap: .25rem; padding: .5rem 0; }
-.thread { position: absolute; left: 4%; right: 70px; top: 40%; height: 2px; background: rgba(233, 201, 131, .18); border-radius: 2px; }
+.thread { position: absolute; inset-inline-start: 4%; inset-inline-end: 70px; top: 40%; height: 2px; background: rgba(233, 201, 131, .18); border-radius: 2px; }
 .fill { display: block; height: 100%; background: linear-gradient(90deg, var(--kec-laterite), var(--kec-gold)); border-radius: 2px; transition: width 1.5s var(--ease-out); }
 .month { position: relative; display: flex; flex-direction: column; align-items: center; gap: .35rem; small { font-size: .68rem; color: var(--kec-text-muted); white-space: nowrap; } }
 .now :deep(svg) { filter: drop-shadow(0 0 10px rgba(214, 165, 72, .8)); animation: bob 2.4s ease-in-out infinite; }

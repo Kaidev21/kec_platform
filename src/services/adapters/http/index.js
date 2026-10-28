@@ -87,6 +87,11 @@ export const messagingHttp = {
   cannedReplies: () => http.get('/backoffice/canned-replies')
 }
 
+/** Demande de consultation publique (sans compte) */
+export const consultationHttp = {
+  request: (payload) => http.post('/public/consultation-requests', payload)
+}
+
 export const investorHttp = {
   dashboard: () => http.get('/investors/dashboard'),
   activity: (limit = 25) => http.get('/investors/activity', { query: { limit } })

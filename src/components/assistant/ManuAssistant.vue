@@ -7,27 +7,87 @@
  * - Indicateur de frappe en cauris, réponses rapides, liens vers les pages.
  * - Garde-fous visibles : pas de conseil juridique individualisé,
  *   escalade humaine signalée clairement.
+ * - Voix (navigateur, sans serveur) : dictée au micro (Web Speech API,
+ *   SpeechRecognition) et lecture des réponses à voix haute
+ *   (speechSynthesis), dans la langue dans laquelle Manu parle.
+ *   Manu détecte la langue de chaque message et répond dans cette langue.
+ *   Sur un navigateur sans ces API, les boutons se désactivent proprement.
  */
-import { ref, nextTick, watch, onMounted } from 'vue'
+import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAssistantStore } from '@/stores/assistant'
 import { useUiStore } from '@/stores/ui'
+import { intlLocale } from '@/utils/format'
 import ManuAvatar from './ManuAvatar.vue'
 import CowrieShape from '@/components/brand/CowrieShape.vue'
 
 const store = useAssistantStore()
 const ui = useUiStore()
 const router = useRouter()
+const { t } = useI18n()
 const draft = ref('')
 const scroller = ref(null)
 const teaser = ref(false)
+
+/* ── Voix : micro et lecture ─────────────────────────────── */
+const Recognition = typeof window !== 'undefined' ? (window.SpeechRecognition || window.webkitSpeechRecognition) : null
+const micSupported = !!Recognition
+const ttsSupported = typeof window !== 'undefined' && 'speechSynthesis' in window
+const listening = ref(false)
+const voiceOn = ref((() => { try { return localStorage.getItem('kec.manuVoice') === '1' } catch { return false } })())
+let recognition = null
+
+function toggleMic() {
+  if (!micSupported) { ui.toast(t('manu.micUnsupported')); return }
+  if (listening.value) { recognition?.stop(); return }
+  recognition = new Recognition()
+  recognition.lang = intlLocale(store.speakingLocale())
+  recognition.interimResults = true
+  recognition.maxAlternatives = 1
+  recognition.onresult = (e) => {
+    const text = Array.from(e.results).map((r) => r[0].transcript).join(' ')
+    draft.value = text
+    if (e.results[e.results.length - 1].isFinal) { listening.value = false; submit() }
+  }
+  recognition.onerror = () => { listening.value = false }
+  recognition.onend = () => { listening.value = false }
+  listening.value = true
+  window.speechSynthesis?.cancel()
+  recognition.start()
+}
+
+function toggleVoice() {
+  if (!ttsSupported) { ui.toast(t('manu.voiceUnsupported')); return }
+  voiceOn.value = !voiceOn.value
+  try { localStorage.setItem('kec.manuVoice', voiceOn.value ? '1' : '0') } catch { /* ignore */ }
+  if (!voiceOn.value) window.speechSynthesis.cancel()
+  else { const last = store.messages.findLast?.((m) => m.from === 'manu') ?? [...store.messages].reverse().find((m) => m.from === 'manu'); if (last) speak(last) }
+}
+
+function speak(m) {
+  if (!voiceOn.value || !ttsSupported || !m?.text) return
+  const synth = window.speechSynthesis
+  synth.cancel()
+  const u = new SpeechSynthesisUtterance(m.text.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, ''))
+  const lang = intlLocale(m.locale ?? store.speakingLocale())
+  u.lang = lang
+  // Voix de la bonne langue si le système en propose une (sinon voix par défaut)
+  const voice = synth.getVoices().find((v) => v.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()) && /female|femme|woman|zira|samantha|amélie|audrey|google/i.test(v.name))
+    ?? synth.getVoices().find((v) => v.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()))
+  if (voice) u.voice = voice
+  u.rate = 1; u.pitch = 1.05
+  synth.speak(u)
+}
+watch(() => store.messages.length, () => { const m = store.messages.at(-1); if (m?.from === 'manu') speak(m) })
+onBeforeUnmount(() => { recognition?.abort?.(); if (ttsSupported) window.speechSynthesis.cancel() })
 
 async function open() {
   ui.manuOpen = true
   teaser.value = false
   await store.greet()
 }
-function close() { ui.manuOpen = false }
+function close() { ui.manuOpen = false; recognition?.stop?.(); if (ttsSupported) window.speechSynthesis.cancel() }
 
 async function submit() {
   const text = draft.value.trim()
@@ -80,6 +140,7 @@ onMounted(() => {
             <strong>Manu AI</strong>
             <span>{{ $t('manu.role') }}</span>
           </div>
+          <button class="icon" type="button" :class="{ on: voiceOn }" :disabled="!ttsSupported" :title="ttsSupported ? (voiceOn ? $t('manu.voiceOff') : $t('manu.voiceOn')) : $t('manu.voiceUnsupported')" :aria-pressed="voiceOn" @click="toggleVoice">{{ voiceOn ? '🔊' : '🔈' }}</button>
           <button class="icon" type="button" :title="$t('manu.restart')" @click="store.reset(); store.greet()">↻</button>
           <button class="icon" type="button" :aria-label="$t('common.close')" @click="close">✕</button>
         </header>
@@ -101,7 +162,8 @@ onMounted(() => {
         </div>
 
         <form class="composer" @submit.prevent="submit">
-          <input v-model="draft" class="k-input" :placeholder="$t('manu.placeholder')" :aria-label="$t('manu.placeholder')" maxlength="500" />
+          <button class="mic" type="button" :class="{ on: listening }" :disabled="!micSupported || store.typing" :title="micSupported ? (listening ? $t('manu.micStop') : $t('manu.mic')) : $t('manu.micUnsupported')" :aria-label="listening ? $t('manu.micStop') : $t('manu.mic')" :aria-pressed="listening" @click="toggleMic">🎤</button>
+          <input v-model="draft" class="k-input" :placeholder="listening ? $t('manu.listening') : $t('manu.placeholder')" :aria-label="$t('manu.placeholder')" maxlength="500" />
           <button class="send" type="submit" :disabled="!draft.trim() || store.typing" :aria-label="$t('manu.send')">➤</button>
         </form>
         <p class="disclaimer">{{ $t('manu.disclaimer') }}</p>
@@ -111,7 +173,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.manu-widget { position: fixed; z-index: 95; right: .9rem; bottom: 7rem; @include md-up { right: 1.5rem; bottom: 6rem; } }
+.manu-widget { position: fixed; z-index: 95; inset-inline-end: .9rem; bottom: 7rem; @include md-up { inset-inline-end: 1.5rem; bottom: 6rem; } }
 .launcher {
   position: relative; background: none; border: 0; padding: 0; border-radius: 50%;
   animation: float 4s ease-in-out infinite;
@@ -120,7 +182,7 @@ onMounted(() => {
 @keyframes float { 50% { transform: translateY(-5px); } }
 @keyframes ring { from { transform: scale(.9); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
 .teaser {
-  position: absolute; right: calc(100% + .8rem); bottom: .5rem; width: 230px; text-align: left;
+  position: absolute; inset-inline-end: calc(100% + .8rem); bottom: .5rem; width: 230px; text-align: start;
   padding: .75rem .9rem; border-radius: 16px 16px 4px 16px; font-size: .84rem; line-height: 1.4;
   background: var(--kec-ivory); color: #2a1a12; box-shadow: var(--shadow-soft);
   strong { display: block; font-family: var(--font-display); font-size: 1rem; }
@@ -132,7 +194,7 @@ onMounted(() => {
   border-radius: 24px; border: 1px solid rgba(214, 165, 72, .35);
   background: linear-gradient(180deg, #2f1e13, #1d130c);
   box-shadow: 0 30px 80px -20px #000;
-  @include sm-up { inset: auto 1.5rem 1.5rem auto; width: 400px; }
+  @include sm-up { inset: auto; inset-inline-end: 1.5rem; bottom: 1.5rem; width: 400px; }
 }
 .head {
   display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem;
@@ -140,13 +202,13 @@ onMounted(() => {
   border-bottom: 1px solid var(--kec-border);
 }
 .who { flex: 1; display: flex; flex-direction: column; line-height: 1.2; strong { font-family: var(--font-display); font-size: 1.15rem; } span { font-size: .76rem; color: #a9c77a; } }
-.icon { background: rgba(255,255,255,.05); border: 0; color: var(--kec-ivory); width: 34px; height: 34px; border-radius: 50%; &:hover { background: rgba(255,255,255,.12); } }
+.icon { background: rgba(255,255,255,.05); border: 0; color: var(--kec-ivory); width: 34px; height: 34px; border-radius: 50%; &:hover { background: rgba(255,255,255,.12); } &.on { background: rgba(214,165,72,.25); box-shadow: 0 0 0 1px var(--kec-gold) inset; } &:disabled { opacity: .35; } }
 
 .thread { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: .7rem; @include clay-grain(.08); }
 .msg { max-width: 88%; display: flex; flex-direction: column; gap: .5rem; }
 .msg p { margin: 0; padding: .7rem .95rem; border-radius: 18px; font-size: .9rem; line-height: 1.5; white-space: pre-line; }
-.msg.from-manu { align-self: flex-start; p { background: #3d2819; border: 1px solid rgba(233, 201, 131, .14); border-bottom-left-radius: 4px; } }
-.msg.from-user { align-self: flex-end; p { background: var(--kec-cowrie); color: #2a1a12; border-bottom-right-radius: 4px; } }
+.msg.from-manu { align-self: flex-start; p { background: #3d2819; border: 1px solid rgba(233, 201, 131, .14); border-end-start-radius: 4px; } }
+.msg.from-user { align-self: flex-end; p { background: var(--kec-cowrie); color: #2a1a12; border-end-end-radius: 4px; } }
 .typing { flex-direction: row; gap: 4px; padding: .8rem 1rem; background: #3d2819; border-radius: 18px; :deep(svg) { animation: hop 1s infinite; } :deep(svg:nth-child(2)) { animation-delay: .15s; } :deep(svg:nth-child(3)) { animation-delay: .3s; } }
 @keyframes hop { 30% { transform: translateY(-5px) rotate(20deg); } }
 .escalated { font-size: .78rem; color: var(--kec-gold-soft); padding: .4rem .7rem; border: 1px dashed rgba(214,165,72,.4); border-radius: 10px; }
@@ -154,12 +216,15 @@ onMounted(() => {
 .qr { display: flex; flex-wrap: wrap; gap: .4rem; button { background: rgba(239,227,201,.08); border: 1px solid rgba(239,227,201,.25); color: var(--kec-ivory); padding: .4rem .75rem; border-radius: 999px; font-size: .8rem; &:hover { background: var(--kec-cowrie); color: #2a1a12; } } }
 
 .composer { display: flex; gap: .5rem; padding: .75rem; border-top: 1px solid var(--kec-border); .k-input { border-radius: 999px; padding: .7rem 1.1rem; } }
+.mic { flex-shrink: 0; width: 42px; border-radius: 50%; border: 1px solid var(--kec-border); background: rgba(255,255,255,.04); font-size: 1rem; transition: all .3s var(--ease-out);
+  &.on { background: #b9391f; border-color: #f0c08a; animation: pulse 1.2s ease-in-out infinite; } &:disabled { opacity: .35; } }
+@keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(185, 57, 31, .25); } }
 .send { flex-shrink: 0; width: 46px; border-radius: 50%; border: 0; color: #2a1a12; background: radial-gradient(circle at 35% 30%, #fff1c9, #d6a548); font-size: 1rem; &:disabled { opacity: .4; } }
 .disclaimer { margin: 0; padding: 0 1rem .7rem; font-size: .68rem; color: var(--kec-text-muted); text-align: center; }
 
 .pop-enter-active, .pop-leave-active { transition: all .4s var(--ease-spring); }
 .pop-enter-from, .pop-leave-to { opacity: 0; transform: scale(.6); }
-.panel-enter-active, .panel-leave-active { transition: all .45s var(--ease-spring); transform-origin: bottom right; }
+.panel-enter-active, .panel-leave-active { transition: all .45s var(--ease-spring); transform-origin: bottom; }
 .panel-enter-from, .panel-leave-to { opacity: 0; transform: translateY(20px) scale(.92); }
 .msg-enter-active { transition: all .4s var(--ease-out); }
 .msg-enter-from { opacity: 0; transform: translateY(10px); }

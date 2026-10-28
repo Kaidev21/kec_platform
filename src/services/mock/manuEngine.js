@@ -16,6 +16,35 @@ import { ESCALATION_RULES, INTENTS, RESPONSES } from './manuKnowledge'
 
 const normalize = (s) => ` ${String(s).toLowerCase()} `
 
+/* ── Détection de la langue du message ─────────────────────────────────────
+ * Heuristique légère, côté navigateur : écriture (arabe, cyrillique, han),
+ * puis mots-outils fréquents pour les langues en alphabet latin. Retourne
+ * null si rien de probant (on garde alors la langue de l'interface).
+ * En production, le backend (LLM) détecte la langue bien plus finement. */
+const SCRIPTS = [[/[\u0600-\u06FF]/, 'ar'], [/[\u0400-\u04FF]/, 'ru'], [/[\u3400-\u9FFF]/, 'zh']]
+const MARKERS = {
+  fr: ['le', 'la', 'les', 'je', 'vous', 'est', 'une', 'un', 'des', 'pour', 'bonjour', 'merci', 'comment', 'combien', 'quel', 'mon', 'avec', 'pas', 'que', 'créer', 'entreprise'],
+  en: ['the', 'i', 'you', 'is', 'are', 'what', 'how', 'my', 'to', 'for', 'can', 'hello', 'thanks', 'please', 'company', 'much', 'do', 'want', 'with', 'and'],
+  de: ['ich', 'sie', 'der', 'die', 'das', 'und', 'ist', 'wie', 'was', 'ein', 'eine', 'nicht', 'mit', 'für', 'hallo', 'danke', 'bitte', 'kann', 'möchte', 'firma'],
+  es: ['el', 'los', 'yo', 'usted', 'es', 'una', 'cómo', 'como', 'qué', 'que', 'cuánto', 'cuánta', 'cuesta', 'precio', 'hola', 'gracias', 'por', 'para', 'quiero', 'empresa', 'mi', 'con', 'crear', 'y', 'en', 'español', 'puedo', 'necesito', 'tiene', 'también'],
+  pt: ['o', 'os', 'eu', 'você', 'é', 'uma', 'como', 'quanto', 'olá', 'obrigado', 'obrigada', 'para', 'quero', 'empresa', 'não', 'com', 'criar', 'meu', 'minha', 'bom', 'e', 'em', 'português', 'custa', 'preço', 'posso', 'preciso', 'tem', 'também', 'dia'],
+  sw: ['na', 'ni', 'ya', 'wa', 'kwa', 'mimi', 'nataka', 'habari', 'jambo', 'asante', 'kampuni', 'biashara', 'ninataka', 'gani', 'bei', 'tafadhali', 'hujambo', 'kuanzisha', 'nini', 'je'],
+  ln: ['na', 'ya', 'ngai', 'nalingi', 'mbote', 'mpo', 'boni', 'ezali', 'nini', 'kompani', 'mombongo', 'matondo', 'yo', 'biso', 'kokela', 'ndenge', 'te', 'pe', 'mpe', 'moto']
+}
+export function detectLocale(text) {
+  const raw = String(text ?? '')
+  for (const [re, code] of SCRIPTS) if (re.test(raw)) return code
+  const words = raw.toLowerCase().replace(/[^\p{L}\p{N}'’ ]+/gu, ' ').split(/\s+/).filter(Boolean)
+  if (!words.length) return null
+  let best = null, bestScore = 0
+  for (const [code, list] of Object.entries(MARKERS)) {
+    const score = words.reduce((n, w) => n + (list.includes(w) ? 1 : 0), 0)
+    if (score > bestScore) { best = code; bestScore = score }
+  }
+  // Au moins deux marqueurs, ou un seul sur un message très court
+  return bestScore >= 2 || (bestScore === 1 && words.length <= 3) ? best : null
+}
+
 const DEFAULT_SETTINGS = { missesThreshold: 3, escalation: {}, extraEscalationKeywords: [], quickRepliesEnabled: true, greetingOverride: {}, tone: 'warm' }
 
 function build(entry, kb, name = '', settings = DEFAULT_SETTINGS) {
@@ -28,7 +57,9 @@ function build(entry, kb, name = '', settings = DEFAULT_SETTINGS) {
 
 /** Fusionne la base livrée et les surcharges éditées par l'équipe */
 function knowledge(locale, overrides) {
-  const kb = RESPONSES[locale] ?? RESPONSES.fr
+  // Une intention absente dans une langue retombe sur l'anglais puis le français
+  const base = RESPONSES[locale] ?? RESPONSES.fr
+  const kb = { ...RESPONSES.fr, ...RESPONSES.en, ...base, labels: { ...RESPONSES.fr.labels, ...RESPONSES.en.labels, ...(base.labels ?? {}) } }
   const o = overrides?.intents ?? {}
   const merged = { ...kb }
   for (const [id, patch] of Object.entries(o)) {

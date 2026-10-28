@@ -6,5 +6,5 @@ export const PAYMENT_TONE = { succeeded: 'olive', pending: 'gold', awaiting_tran
 export const BOOKING_TONE = { awaiting_payment: 'clay', confirmed: 'gold', completed: 'olive', cancelled: 'muted' }
 export const THREAD_TONE = { open: 'gold', pending: 'indigo', closed: 'muted' }
 export const PRIORITY_TONE = { normal: 'muted', high: 'clay', urgent: 'danger' }
-export const KIND_TONE = { manu: 'gold', consultant: 'indigo', dossier: 'olive', payment: 'clay', support: 'muted' }
+export const KIND_TONE = { manu: 'gold', consultant: 'indigo', consultation: 'clay', dossier: 'olive', payment: 'clay', support: 'muted' }
 export const MEMBER_TONE = { active: 'olive', invited: 'gold', disabled: 'danger' }

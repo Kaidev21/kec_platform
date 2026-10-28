@@ -1,5 +1,5 @@
 /** Formatage dépendant de la langue (montants FCFA, dates, nombres). */
-const intlLocale = (l) => ({ fr: 'fr-FR', en: 'en-GB', de: 'de-DE' }[l] ?? l)
+export const intlLocale = (l) => ({ fr: 'fr-FR', en: 'en-GB', de: 'de-DE', es: 'es-ES', ru: 'ru-RU', ln: 'fr-FR', sw: 'sw-KE', pt: 'pt-PT', zh: 'zh-CN', ar: 'ar-MA' }[l] ?? l)
 
 export const formatXaf = (amount, locale = 'fr') =>
   `${new Intl.NumberFormat(intlLocale(locale), { maximumFractionDigits: 0 }).format(amount ?? 0)} FCFA`
@@ -11,7 +11,7 @@ export const formatCompactXaf = (amount, locale = 'fr') =>
 export const formatNumber = (n, locale = 'fr') => new Intl.NumberFormat(intlLocale(locale)).format(n ?? 0)
 
 export const formatDate = (iso, locale = 'fr', opts = { day: 'numeric', month: 'short', year: 'numeric' }) =>
-  iso ? new Intl.DateTimeFormat(intlLocale(locale), opts).format(new Date(iso)) : '—'
+  iso ? new Intl.DateTimeFormat(intlLocale(locale), opts).format(new Date(iso)) : '·'
 
 export const formatTime = (iso, locale = 'fr') =>
   new Intl.DateTimeFormat(intlLocale(locale), { hour: '2-digit', minute: '2-digit' }).format(new Date(iso))

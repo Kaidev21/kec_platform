@@ -51,9 +51,9 @@ function toggle(v) {
   }
 }
 .bead {
-  display: inline-flex; width: 0; overflow: hidden; opacity: 0; margin-right: -.5rem;
+  display: inline-flex; width: 0; overflow: hidden; opacity: 0; margin-inline-end: -.5rem;
   transition: all .35s var(--ease-spring);
-  .on & { width: 8px; opacity: 1; margin-right: 0; transform: rotate(-20deg); }
+  .on & { width: 8px; opacity: 1; margin-inline-end: 0; transform: rotate(-20deg); }
 }
 .ico { font-size: 1rem; }
 </style>

@@ -39,7 +39,7 @@ function pickCountry(c) {
 h4 { font-family: var(--font-body); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--kec-sand); margin: 1.25rem 0 .75rem; }
 .countries { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 .country {
-  display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem; border-radius: 14px; text-align: left;
+  display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem; border-radius: 14px; text-align: start;
   border: 1px solid rgba(233, 201, 131, .18); background: rgba(20, 12, 7, .35); color: var(--kec-ivory); font-size: .86rem; font-weight: 600;
   transition: all .25s;
   .flag { font-size: 1.3rem; }

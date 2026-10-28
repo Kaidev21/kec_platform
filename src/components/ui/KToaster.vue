@@ -18,7 +18,7 @@ const ui = useUiStore()
 </template>
 
 <style scoped lang="scss">
-.k-toaster { position: fixed; z-index: 8500; top: 1rem; right: 1rem; left: 1rem; display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; pointer-events: none; }
+.k-toaster { position: fixed; z-index: 8500; top: 1rem; inset-inline-end: 1rem; inset-inline-start: 1rem; display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; pointer-events: none; }
 .toast {
   pointer-events: auto; cursor: pointer; max-width: 420px;
   display: flex; align-items: center; gap: .7rem;

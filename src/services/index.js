@@ -22,6 +22,7 @@ import { assistantMock } from './adapters/mock/assistant.mock'
 import { investorMock } from './adapters/mock/investor.mock'
 import { backofficeMock } from './adapters/mock/backoffice.mock'
 import { messagingMock } from './adapters/mock/messaging.mock'
+import { consultationMock } from './adapters/mock/consultation.mock'
 import * as httpAdapters from './adapters/http'
 import { realtimeMock } from './realtime/realtime.mock'
 import { realtimeHttp } from './realtime/realtime.http'
@@ -47,6 +48,7 @@ export const api = {
   investor: pick('investor', investorMock, httpAdapters.investorHttp),
   backoffice: pick('backoffice', backofficeMock, httpAdapters.backofficeHttp),
   messaging: pick('messaging', messagingMock, httpAdapters.messagingHttp),
+  consultation: pick('consultation', consultationMock, httpAdapters.consultationHttp),
   realtime: pick('realtime', realtimeMock, realtimeHttp)
 }
 

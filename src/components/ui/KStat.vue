@@ -36,6 +36,6 @@ const text = computed(() => (props.format ? props.format(shown.value) : shown.va
 .a-clay { --accent: var(--kec-terracotta); }
 .a-olive { --accent: var(--kec-olive-soft); }
 .lbl { font-size: .76rem; text-transform: uppercase; letter-spacing: .14em; color: var(--kec-text-muted); font-weight: 700; }
-.val { font-family: var(--font-display); font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 600; line-height: 1.1; small { font-size: .5em; margin-left: .25em; color: var(--kec-text-muted); font-family: var(--font-body); } }
+.val { font-family: var(--font-display); font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 600; line-height: 1.1; small { font-size: .5em; margin-inline-start: .25em; color: var(--kec-text-muted); font-family: var(--font-body); } }
 .hint { font-size: .8rem; color: var(--kec-gold-soft); }
 </style>

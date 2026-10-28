@@ -1,29 +1,78 @@
 <script setup>
-/** En-tête public : logo, navigation, langue, accès Connexion. */
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+/**
+ * En-tête public : logo, navigation, langue, accès à l'espace client.
+ * « Accueil » regroupe Services, Le parcours et Le programme dans un menu
+ * au survol (ou au toucher) ; le filet doré suit la section visible pendant
+ * le défilement de l'accueil (scroll-spy) et reste sur la page courante ailleurs.
+ */
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import KecLogo from '@/components/brand/KecLogo.vue'
 import KButton from '@/components/ui/KButton.vue'
 import LangSwitcher from './LangSwitcher.vue'
 import { useAuthStore, HOME_BY_ROLE } from '@/stores/auth'
 
 const auth = useAuthStore()
+const route = useRoute()
 const scrolled = ref(false)
 const menu = ref(false)
+const navOpen = ref(false)
+const section = ref('') // id de la section visible sur l'accueil
+
+const SECTIONS = [
+  { id: 'services', key: 'nav.services' },
+  { id: 'parcours', key: 'nav.journey' },
+  { id: 'programme', key: 'nav.program' }
+]
+const onHome = computed(() => route.name === 'home')
+
+let spy = null
+function watchSections() {
+  spy?.disconnect()
+  spy = null
+  section.value = ''
+  if (!onHome.value || typeof IntersectionObserver === 'undefined') return
+  const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean)
+  if (!els.length) return
+  spy = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) section.value = e.target.id
+      else if (section.value === e.target.id) section.value = ''
+    }
+  }, { rootMargin: '-45% 0px -45% 0px' })
+  els.forEach((el) => spy.observe(el))
+}
+
 const onScroll = () => { scrolled.value = window.scrollY > 30 }
-onMounted(() => { onScroll(); window.addEventListener('scroll', onScroll, { passive: true }) })
-onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
+onMounted(() => { onScroll(); window.addEventListener('scroll', onScroll, { passive: true }); setTimeout(watchSections, 400) })
+onBeforeUnmount(() => { window.removeEventListener('scroll', onScroll); spy?.disconnect() })
+watch(() => route.name, () => { menu.value = false; navOpen.value = false; setTimeout(watchSections, 400) })
+const close = () => { menu.value = false; navOpen.value = false }
+/* Le menu reste ouvert tant que la souris est sur « Accueil » ou sur la liste ; on laisse 250 ms
+   pour traverser l'espace entre les deux, sinon il se fermait avant le clic. */
+let navTimer
+const openNav = () => { clearTimeout(navTimer); navOpen.value = true }
+const closeNavSoon = () => { clearTimeout(navTimer); navTimer = setTimeout(() => { navOpen.value = false }, 250) }
 </script>
 
 <template>
   <header class="hdr" :class="{ scrolled, open: menu }">
     <div class="container bar">
-      <RouterLink to="/" class="brand" :aria-label="$t('nav.home')" @click="menu = false"><KecLogo :size="40" /></RouterLink>
+      <RouterLink to="/" class="brand" :aria-label="$t('nav.home')" @click="close"><KecLogo :size="40" /></RouterLink>
 
       <nav class="nav" :aria-label="$t('nav.main')">
-        <RouterLink :to="{ name: 'home', hash: '#programme' }" @click="menu = false">{{ $t('nav.program') }}</RouterLink>
-        <RouterLink :to="{ name: 'home', hash: '#services' }" @click="menu = false">{{ $t('nav.services') }}</RouterLink>
-        <RouterLink :to="{ name: 'waiting-room' }" @click="menu = false">{{ $t('nav.waitingRoom') }}</RouterLink>
-        <RouterLink :to="{ name: 'kopen-mind' }" @click="menu = false">Kopen Mind</RouterLink>
+        <div class="group" :class="{ open: navOpen }" @mouseenter="openNav" @mouseleave="closeNavSoon" @focusin="openNav" @focusout="closeNavSoon">
+          <RouterLink :to="{ name: 'home' }" class="top" :class="{ 'is-current': onHome && !section }" :aria-expanded="navOpen" @click="close">
+            {{ $t('nav.homeLabel') }} <span class="chev" aria-hidden="true">▾</span>
+          </RouterLink>
+          <ul class="drop">
+            <li v-for="s in SECTIONS" :key="s.id">
+              <RouterLink :to="{ name: 'home', hash: `#${s.id}` }" :class="{ 'is-current': section === s.id }" @click="close">{{ $t(s.key) }}</RouterLink>
+            </li>
+          </ul>
+        </div>
+        <RouterLink :to="{ name: 'waiting-room' }" :class="{ 'is-current': route.name === 'waiting-room' }" @click="close">{{ $t('nav.waitingRoom') }}</RouterLink>
+        <RouterLink :to="{ name: 'kopen-mind' }" :class="{ 'is-current': route.name === 'kopen-mind' }" @click="close">Kopen Mind</RouterLink>
       </nav>
 
       <div class="actions">
@@ -52,8 +101,17 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 .nav {
   display: none; gap: 2rem;
   a { color: var(--kec-ivory); font-weight: 600; font-size: .93rem; position: relative; padding: .3rem 0; }
-  a::after { content: ''; position: absolute; left: 50%; right: 50%; bottom: -2px; height: 2px; background: var(--kec-gold); border-radius: 2px; transition: all .35s var(--ease-out); }
-  a:hover::after, a.router-link-exact-active::after { left: 0; right: 0; }
+  /* Filet doré : uniquement sur la section en cours (ou la page courante), et au survol */
+  a::after { content: ''; position: absolute; inset-inline: 50%; bottom: -2px; height: 2px; background: var(--kec-gold); border-radius: 2px; transition: inset-inline .35s var(--ease-out); }
+  a:hover::after, a.is-current::after { inset-inline: 0; }
+  .group { position: relative; }
+  /* Pont invisible entre le lien et la liste : la souris ne « sort » plus du groupe en descendant */
+  .group.open::after { content: ''; position: absolute; inset-inline: -.75rem; top: 100%; height: .8rem; }
+  .chev { font-size: .7em; color: var(--kec-gold); margin-inline-start: .2rem; }
+  .drop { list-style: none; margin: 0; padding: .5rem; position: absolute; top: calc(100% + .6rem); inset-inline-start: -.75rem; min-width: 190px; display: none; flex-direction: column; gap: .1rem;
+    background: #2c1c12; border: 1px solid var(--kec-border); border-radius: 16px; box-shadow: var(--shadow-soft);
+    a { display: block; padding: .55rem .8rem; border-radius: 10px; font-weight: 500; &::after { inset-inline: auto; width: 0; } &:hover, &.is-current { background: rgba(214, 165, 72, .12); } &.is-current { color: var(--kec-gold-soft); } } }
+  .group.open .drop { display: flex; }
   @include md-up { display: flex; }
 }
 .actions { display: flex; align-items: center; gap: .6rem; }
@@ -67,10 +125,13 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 .open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @include md-down {
+  /* Sur téléphone : le menu déroulant devient une sous-liste indentée */
   .open .nav {
-    display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0;
+    display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; inset-inline: 0;
     background: rgba(26, 17, 11, .97); padding: .5rem 1.25rem 1.25rem; border-bottom: 1px solid var(--kec-border);
     a { padding: .9rem 0; border-bottom: 1px solid rgba(233, 201, 131, .08); font-size: 1.05rem; }
+    .drop { display: flex; position: static; min-width: 0; padding: 0 0 0 1.25rem; border: 0; background: none; box-shadow: none; a { font-size: .95rem; padding: .7rem 0; } }
+    .chev { display: none; }
   }
   .actions :deep(.k-btn) { padding: .45rem .8rem; }
 }

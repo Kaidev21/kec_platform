@@ -61,10 +61,13 @@ async function submit() {
         <path d="M30 80h160l-10 108H40z" fill="url(#km-wood)" />
         <path d="M24 70h172v16H24z" fill="#3a2416" />
         <rect x="80" y="74" width="60" height="6" rx="3" fill="#120b07" />
+        <!-- « Kopen Mind » gravé dans le bois, légèrement en creux -->
+        <text x="110" y="105" text-anchor="middle" font-family="Fraunces Variable, Georgia, serif" font-size="14" font-weight="700" letter-spacing="2.5" fill="#2a170d" opacity=".7">KOPEN MIND</text>
+        <text x="110" y="104" text-anchor="middle" font-family="Fraunces Variable, Georgia, serif" font-size="14" font-weight="700" letter-spacing="2.5" fill="#d6a548" opacity=".9">KOPEN MIND</text>
         <!-- motifs sculptés -->
-        <path d="M50 110l14 12-14 12M170 110l-14 12 14 12M90 150h40M100 162h20" stroke="#d6a548" stroke-width="2.5" fill="none" opacity=".7" />
-        <circle cx="110" cy="122" r="10" fill="none" stroke="#d6a548" stroke-width="2.5" opacity=".8" />
-        <ellipse cx="110" cy="122" rx="3" ry="5" fill="#efe3c9" />
+        <path d="M50 120l14 12-14 12M170 120l-14 12 14 12M90 152h40M100 164h20" stroke="#d6a548" stroke-width="2.5" fill="none" opacity=".7" />
+        <circle cx="110" cy="132" r="10" fill="none" stroke="#d6a548" stroke-width="2.5" opacity=".8" />
+        <ellipse cx="110" cy="132" rx="3" ry="5" fill="#efe3c9" />
       </svg>
     </div>
 

@@ -7,7 +7,7 @@
  */
 import { db } from '../../mock/db'
 import { respond, uid, delay } from '../../mock/mockUtils'
-import { manuReply, manuWelcome, knowledgeCatalog } from '../../mock/manuEngine'
+import { manuReply, manuWelcome, knowledgeCatalog, detectLocale } from '../../mock/manuEngine'
 import { openThread, systemMessage } from './messaging.mock'
 import { ESCALATION_RULES } from '../../mock/manuKnowledge'
 
@@ -18,7 +18,7 @@ const REASON_ASSIGNEE = { tax: 'tm_fouda', social: 'tm_ndjock', criminal: 'tm_nd
 
 export const assistantMock = {
   async welcome({ locale, name }) {
-    return respond(manuWelcome(locale, name, settings(), overrides()), 300)
+    return respond({ ...manuWelcome(locale, name, settings(), overrides()), locale }, 300)
   },
 
   /**
@@ -28,12 +28,16 @@ export const assistantMock = {
     const cfg = settings()
     if (cfg?.degradedMode) throw new Error('errors.generic') // dégradation gracieuse testable depuis le back-office
     const started = Date.now()
-    const { reply, state: next, intent } = manuReply(message, state, cfg, overrides())
+    // Manu répond dans la langue du message (détection), sinon dans celle de la conversation, sinon celle de l'interface
+    const locale = detectLocale(message) ?? state.replyLocale ?? state.locale ?? 'fr'
+    const { reply, state: next, intent } = manuReply(message, { ...state, locale }, cfg, overrides())
+    reply.locale = locale
+    next.replyLocale = locale
     // Temps de "frappe" proportionnel à la longueur : plus humain
     await delay(Math.min(600 + reply.text.length * 12, 2200))
 
     db.insert('assistantLogs', {
-      id: uid('alog'), sessionId: state.sessionId ?? 'anon', at: new Date().toISOString(), locale: state.locale ?? 'fr',
+      id: uid('alog'), sessionId: state.sessionId ?? 'anon', at: new Date().toISOString(), locale,
       role: userId ? 'fellow' : 'visitor', userMessage: message.slice(0, 200), intent, escalated: !!reply.escalated,
       reason: reply.reason ?? null, misses: next.misses ?? 0, responseMs: Date.now() - started, page
     })
@@ -44,7 +48,7 @@ export const assistantMock = {
       openThread({
         kind: 'manu', reason: reply.reason, fellowId: userId, fellowName: userName,
         priority: reply.reason === 'urgent' ? 'urgent' : ['tax', 'litigation', 'criminal'].includes(reply.reason) ? 'high' : 'normal',
-        assigneeId: REASON_ASSIGNEE[reply.reason] ?? null, tags: [reply.reason, state.locale?.toUpperCase()].filter(Boolean),
+        assigneeId: REASON_ASSIGNEE[reply.reason] ?? null, tags: [reply.reason, locale.toUpperCase()].filter(Boolean),
         subject: message.slice(0, 80),
         messages: [...history, { from: 'manu', author: 'Manu AI', text: reply.text }, systemMessage(`Conversation transmise à l'équipe (motif : ${reply.reason}).`)]
       })

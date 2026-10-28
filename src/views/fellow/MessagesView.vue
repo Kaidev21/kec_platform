@@ -146,14 +146,14 @@ watch(filter, () => { if (current.value && !filtered.value.includes(current.valu
 @include md-down { .layout.has-current .list { display: none; } }
 .list { overflow: hidden; display: flex; flex-direction: column;
   ul { list-style: none; padding: 0; margin: 0; overflow-y: auto; max-height: 70vh; }
-  li button { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--kec-border); padding: .9rem 1rem; color: var(--kec-ivory); display: grid; gap: .3rem; position: relative; &:hover { background: rgba(255,255,255,.03); } }
+  li button { width: 100%; text-align: start; background: none; border: 0; border-bottom: 1px solid var(--kec-border); padding: .9rem 1rem; color: var(--kec-ivory); display: grid; gap: .3rem; position: relative; &:hover { background: rgba(255,255,255,.03); } }
   li.on button { background: rgba(214,165,72,.1); box-shadow: inset 3px 0 0 var(--kec-gold); }
   li.unread strong { color: var(--kec-gold-soft); }
   .top { display: flex; justify-content: space-between; align-items: center; small { font-size: .7rem; color: var(--kec-text-muted); } }
   strong { font-size: .95rem; line-height: 1.3; }
   .preview { font-size: .8rem; color: var(--kec-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .meta { display: flex; justify-content: space-between; align-items: center; font-size: .74rem; color: var(--kec-gold-soft); }
-  .dot { position: absolute; right: 1rem; top: 2.9rem; width: 9px; height: 9px; border-radius: 50%; background: var(--kec-laterite); box-shadow: 0 0 0 3px rgba(168,64,31,.25); }
+  .dot { position: absolute; inset-inline-end: 1rem; top: 2.9rem; width: 9px; height: 9px; border-radius: 50%; background: var(--kec-laterite); box-shadow: 0 0 0 3px rgba(168,64,31,.25); }
   .empty { padding: 1.5rem; text-align: center; } }
 .tabs { display: flex; gap: .3rem; padding: .75rem; border-bottom: 1px solid var(--kec-border);
   button { flex: 1; background: none; border: 1px solid var(--kec-border); color: var(--kec-text-muted); padding: .4rem; border-radius: 999px; font-size: .78rem; font-weight: 700; &.on { background: var(--kec-cowrie); color: #2a1a12; border-color: transparent; } } }

@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "dev:http": "vite --mode http",
+    "check:i18n": "node scripts/check-i18n.mjs",
+    "prebuild": "npm run check:i18n",
     "build": "vite build",
     "preview": "vite preview"
   },

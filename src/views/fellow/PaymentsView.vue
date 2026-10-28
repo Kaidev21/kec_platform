@@ -131,7 +131,7 @@ const methodLabel = (m) => (m === 'bank' ? t('payment.bank') : METHOD[m] ?? m)
 .main { display: grid; gap: 1.25rem; }
 .box { padding: 1.5rem; }
 .plan-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: flex-start; h3 { margin-bottom: .2rem; } p { margin: 0; font-size: .88rem; } }
-.paid { text-align: right; strong { display: block; font-family: var(--font-display); font-size: 1.6rem; color: var(--kec-gold-soft); line-height: 1.1; } span { font-size: .78rem; color: var(--kec-text-muted); } }
+.paid { text-align: end; strong { display: block; font-family: var(--font-display); font-size: 1.6rem; color: var(--kec-gold-soft); line-height: 1.1; } span { font-size: .78rem; color: var(--kec-text-muted); } }
 .meter { position: relative; width: 100%; height: 12px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden; margin: 1rem 0;
   span { display: block; height: 100%; background: linear-gradient(90deg, var(--kec-laterite), var(--kec-gold)); transition: width 1s var(--ease-out); }
   em { position: absolute; top: 0; height: 100%; background: repeating-linear-gradient(45deg, rgba(214,165,72,.5) 0 6px, transparent 6px 12px); } }

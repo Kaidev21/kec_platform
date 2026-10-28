@@ -1,10 +1,10 @@
-# Cahier de test — Plateforme KEC
+# Cahier de test · Plateforme KEC
 
-Oct 24, 2026 · @Seira
+Oct 24, 2026 · mis à jour le 28 oct. 2026 (lots 1 à 8) · @Seira
 
 ## Mode d'emploi
 
-Ce cahier parcourt chaque partie de la version livrée le 24 octobre 2026 (mocks, sans serveur). Chaque ligne se joue en séance avec la cliente : on fait l'action, on compare au résultat attendu, on choisit un résultat dans la colonne et on note la remarque. Les lignes marquées « à discuter » sont des choix de conception à valider, pas des bugs.
+Ce cahier parcourt chaque partie de la version livrée le 24 octobre 2026 (mocks, sans serveur), complétée le 28 octobre par les huit lots du plan de corrections (section 21). Chaque ligne se joue en séance avec la cliente : on fait l'action, on compare au résultat attendu, on choisit un résultat dans la colonne et on note la remarque. Les lignes marquées « à discuter » sont des choix de conception à valider, pas des bugs.
 
 **Préparation** : lancer `npm install` puis `npm run dev`, ouvrir http://localhost:5173 dans Chrome ou Safari. Les données sont stockées dans le navigateur ; pour repartir de zéro, taper `kecResetMock()` dans la console puis recharger. Pour tester le temps réel, ouvrir deux onglets (par exemple la salle d'attente et Kia).
 
@@ -28,11 +28,11 @@ L'accueil doit donner l'identité africaine et amener vers la salle d'attente en
 | --- | --- | --- | --- | --- |
 | 1.1 | Ouvrir / | La poussière de latérite forme le logo KEC à droite ; le texte de gauche apparaît 1 s après le début de l'animation, sans attendre la fin | À tester |  |
 | 1.2 | Attendre 30 s sans bouger | Des cauris tombent par 1 à 4, toutes les 7 à 16 s, jamais en rafale | À tester |  |
-| 1.3 | Faire défiler | Globe qui tourne vers l'Afrique, compteurs (fellows, mois, régions), six services, parcours en sept perles, encart SCALE 110 avec le prix 300 000 FCFA | À tester |  |
+| 1.3 | Faire défiler | Dans l'ordre : accueil, six services, globe (54 pays, 17 OHADA, 12 villes, 10 langues), parcours en sept perles qui s'enfilent, encart SCALE 110, nostalgie, Kopen Mind | À tester |  |
 | 1.4 | Cliquer « Entrer dans la salle d'attente » | Arrivée sur /salle-d-attente | À tester |  |
-| 1.5 | Barre « Voulez-vous parler à l'un de nos consultants ? » | Tarif 15 000 FCFA / heure affiché ; « Cliquez ici » mène à la connexion fellow ; la croix masque la barre pour la session | À tester |  |
-| 1.6 | Changer la langue (FR / EN / DE) en haut à droite | Toute la page change, le choix est gardé au rechargement | À tester |  |
-| 1.7 | Pied de page | Liens vers connexion fellows, Kia, équipe KEC ; mention « pas de conseil juridique individualisé en ligne » | À tester |  |
+| 1.5 | Carte « Un consultant, quand vous voulez » en bas | Aucun tarif affiché ; « Cliquez ici » ouvre le formulaire « Que pouvons-nous faire pour vous ? » (voir 21.7) ; la croix masque la carte pour la session | À tester |  |
+| 1.6 | Changer la langue en haut à droite | Dix langues sur deux colonnes, chacune dans sa propre écriture ; toute la page change, le choix est gardé au rechargement | À tester |  |
+| 1.7 | Pied de page | Liens « Mon espace · clients », Kia, équipe KEC ; contact (villes, e-mail) ; sept réseaux sous « Nous suivre » (WhatsApp, LinkedIn, Facebook, Instagram, TikTok, WeChat, Douyin) marqués « bientôt » tant que les liens manquent ; mention « pas de conseil juridique individualisé en ligne » | À tester |  |
 | 1.8 | Sur téléphone (ou fenêtre réduite) | Menu burger, textes lisibles, pas de défilement horizontal | À tester |  |
 
 ## 2. Salle d'attente et liste d'attente
@@ -42,10 +42,10 @@ On doit se sentir dans une salle d'attente vivante, et l'inscription doit prendr
 | # | Action | Attendu | Résultat | Remarque |
 | --- | --- | --- | --- | --- |
 | 2.1 | Ouvrir /salle-d-attente et observer 20 s | Ventilateur qui tourne, horloge à l'heure réelle, lampe qui oscille avec une mouche, fenêtre avec soleil, nuages, oiseaux, palmier et rideau qui bougent | À tester |  |
-| 2.2 | Le banc sous le titre | Quatre entrepreneurs assis en boubou, pagne et chemise wax ; ils respirent, l'un regarde son téléphone, un autre discute (bulle) ; plante et radio animées | À tester |  |
+| 2.2 | Le banc sous le titre | Six personnes assises, carnations, coiffures et tenues variées (boubou, pagne, wax, cheveux longs, cheveux gris) ; elles respirent, l'une regarde son téléphone, une autre discute (bulle) ; plante et radio animées | À tester |  |
 | 2.3 | Attendre une arrivée simulée (toutes les quelques secondes) | La porte « Entrée » s'ouvre, une silhouette entre et s'assoit ; la liste « X de Yaoundé vient de s'asseoir » et le compteur augmentent | À tester |  |
-| 2.4 | Cliquer « Servir le café » | La bouilloire s'incline, la tasse se remplit, la vapeur monte ; Manu change de phrase | À tester |  |
-| 2.5 | Proverbes | Un proverbe africain change toutes les 7 s | À tester |  |
+| 2.4 | Jetons « Café, Thé, Vin blanc, Arachides bouillies, Cola » | Manu demande « On vous prend quoi à boire ? » ; chaque jeton joue sa scène (bouilloire et tasse, théière et verre, bouteille et verre à pied, marmite et bol, noix de cola qui se fend) et Manu commente ce qu'elle a servi | À tester |  |
+| 2.5 | Proverbes | Un proverbe change toutes les 7 s, avec son pays d'origine (drapeau + nom) ; le koki camerounais ouvre la série ; l'ordre est mélangé à chaque visite | À tester |  |
 | 2.6 | Formulaire étape 1 : laisser vide et cliquer Suivant | Messages d'erreur sous prénom, nom, e-mail ; l'e-mail invalide est refusé | À tester |  |
 | 2.7 | Étape 2 : pays cible, ville, secteur, stade du projet, résumé, besoins | Seul le Cameroun est ouvert, les autres pays OHADA sont « bientôt » ; villes proposées (Douala, Yaoundé, Edéa…) | À tester |  |
 | 2.8 | Étape 3 : canal d'acquisition et consentement | Le canal « agent de terrain » ou « évènement » demande un détail ; impossible d'envoyer sans le consentement données | À tester |  |
@@ -67,7 +67,7 @@ Manu accueille, oriente et passe la main à un humain dès qu'un sujet est sensi
 | 3.5 | Écrire trois messages incompréhensibles (« azerty », « hmm », « ??? ») | Après la 3ᵉ incompréhension, Manu passe la main à un humain | À tester |  |
 | 3.6 | Écrire « je veux parler à quelqu'un » | Transfert immédiat à l'équipe | À tester |  |
 | 3.7 | Cliquer une réponse rapide « liste d'attente » | Manu propose le lien et peut emmener vers la salle d'attente | À tester |  |
-| 3.8 | Passer le site en anglais puis en allemand, rouvrir Manu | Manu répond dans la langue choisie | À tester |  |
+| 3.8 | Passer le site dans chacune des dix langues, rouvrir Manu | Message d'accueil et réponses rapides dans la langue choisie | À tester |  |
 | 3.9 | Dans le back-office, Manu AI › Journal des échanges | Les messages envoyés en 3.3 à 3.6 y figurent avec l'intention détectée et la page | À tester |  |
 
 ## 4. Connexion fellow et tableau de bord
@@ -311,6 +311,7 @@ Pensé pour le téléphone : les inscriptions et les encaissements arrivent en d
 | # | Action | Attendu | Résultat | Remarque |
 | --- | --- | --- | --- | --- |
 | 19.1 | Passer en anglais puis en allemand depuis chaque espace (public, fellow, équipe, Kia) | Tout est traduit, y compris Manu, les statuts, les e-mails types ; aucune clé brute du type « bo.inbox.title » | À tester |  |
+| 19.1b | Passer en espagnol, portugais, russe, swahili, lingala, chinois, arabe sur le public, l'espace fellow et Kia | Tout est traduit ; dans l'espace équipe, les écrans restent en français (choix volontaire) ; aucune clé brute | À tester |  |
 | 19.2 | Tout le parcours sur un téléphone (ou largeur 390 px) | Menu bas scrollable dans les espaces connectés, tableaux défilables, aucune coupure de texte | À tester |  |
 | 19.3 | Activer « Réduire les animations » dans le système | Poussière, cauris, salle d'attente et globe se calment ; le site reste utilisable | À tester |  |
 | 19.4 | Navigation au clavier (Tab, Entrée, Échap sur les fenêtres) | Focus visible, fenêtres fermables, Manu utilisable au clavier | À tester |  |
@@ -318,6 +319,95 @@ Pensé pour le téléphone : les inscriptions et les encaissements arrivent en d
 | 19.6 | Taper une adresse inexistante (/abc) | Page « Les cauris n'ont pas trouvé cette page » avec retour à l'accueil | À tester |  |
 | 19.7 | `kecResetMock()` dans la console puis recharger | Retour aux données de démonstration d'origine | À tester |  |
 | 19.8 | Temps de chargement du premier écran sur une connexion lente (outil réseau du navigateur en 3G) | Accueil utilisable en moins de 5 s ; les autres pages se chargent à la demande | À tester |  |
+
+## 21. Version du 28 octobre : les huit lots du plan de corrections
+
+Chaque lot reprend un retour de la cliente. Les hypothèses prises pour les questions ouvertes (Q1 à Q12 du plan) sont rappelées dans la colonne Attendu ; elles se changent sans développement lourd.
+
+**Lot 1 · Navigation et accueil**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.1 | Survoler « Accueil ▾ » dans l'en-tête | Menu déroulant : Services, Le parcours, Le programme ; chaque entrée fait défiler jusqu'à la section | À tester |  |
+| 21.2 | Faire défiler l'accueil lentement | L'entrée du menu correspondant à la section visible se souligne en or (scroll-spy) ; sur téléphone, les trois sous-entrées sont indentées sous Accueil | À tester |  |
+| 21.3 | Texte du globe | Nouveau texte « Où que vous soyez : New York, Berlin… », sans tiret long ; aucun tiret long nulle part sur le site (contrôlé par `npm run check:i18n`) | À tester |  |
+| 21.4 | Section « Le parcours SCALE 110 » | Sous-titre « Sept perles sur un même fil » ; en arrivant sur la section, le fil se tend et les sept perles s'enfilent l'une après l'autre, la dernière brille ; le collier oscille doucement | À tester |  |
+| 21.5 | Encart programme | Texte « KEC choisit les 110 fellows parmi la liste d'attente » ; logo KEC en filigrane ; plus de ligne « prix » dans les trois points | À tester |  |
+
+**Lot 2 · Cauris**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.6 | Accueil ou salle d'attente, attendre 2 min | Les cauris tombent lentement, se posent en bas de l'écran et s'empilent (3 rangées maximum) ; de temps en temps l'un d'eux bouge ; jamais plus de 60 posés (30 sur téléphone), les plus anciens s'effacent | À tester |  |
+| 21.7b | Quitter vers une autre page | Les cauris posés s'effacent en fondu ; sur les autres pages ils tombent et disparaissent comme avant | À tester |  |
+| 21.8 | Redimensionner la fenêtre | Les cauris posés restent au sol, sans trou ni superposition | À tester |  |
+
+**Lot 3 · Globe interactif**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.9 | Survoler un pays d'Afrique | Il rougit, la rotation se met en pause, une fiche apparaît : drapeau, nom, « Membre OHADA » si c'est le cas, un repère en une phrase, mention « Repère à valider par KEC » | À tester |  |
+| 21.10 | Cliquer un pays (ou le toucher sur mobile) | La fiche reste épinglée avec un bouton Fermer et un lien « Créer ici » vers la salle d'attente ; Échap ferme | À tester |  |
+| 21.11 | Faire glisser le globe | Il tourne à la main sans ouvrir de fiche ; relâché, il reprend sa rotation | À tester |  |
+| 21.12 | Observer 1 min | Les arcs partent de 15 villes de la diaspora vers des villes africaines différentes toutes les 20 s | À tester |  |
+| 21.13 | Compteurs sous le texte | 54 pays, 17 OHADA, 12 villes reliées, 10 langues (calculés depuis les données, pas saisis à la main) | À tester |  |
+| 21.14 | À discuter | Les 54 repères (`src/data/africaFacts.js`) ont été rédigés par Seira : la cliente les valide ou les corrige ; le drapeau « à valider » disparaît dès que `validated: true` | À discuter |  |
+
+**Lot 4 · Libellés**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.15 | En-tête, pied de page, page de connexion, espace connecté | « Mon espace » partout (plus « Espace fellows ») ; dans l'espace, badge « Fellow #17 / 110 » | À tester |  |
+| 21.16 | Kia | Titre « Kia · KEC Invest Again » ; accueil « Cher investisseur, bonjour {prénom}. » ; info-bulle sur le lien du pied de page | À tester |  |
+| 21.17 | Boîte Kopen Mind | « KOPEN MIND » gravé dans le bois du couvercle, les motifs sculptés en dessous | À tester |  |
+| 21.18 | À discuter | Comptes clients en libre-service (inscription, mot de passe oublié) : lot 9, non livré, à planifier | À discuter |  |
+
+**Lot 5 · Salle d'attente**
+
+Voir 2.2, 2.4 et 2.5 mis à jour. Les proverbes et leurs pays d'origine sont dans `src/data/proverbs.js` (55 proverbes, un par pays ; attributions proposées par Seira, à arbitrer).
+
+**Lot 6 · Manu, voix et langues**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.19 | Ouvrir Manu | Message d'accueil « Hello, et bienvenue à K-Enterprise Counsel 🌍 Je suis Manu, la réceptionniste de KEC. Comment puis-je vous aider aujourd'hui ? » (ou sa traduction) ; bouton micro à gauche du champ, bouton haut-parleur dans l'en-tête | À tester |  |
+| 21.20 | Cliquer le micro (Chrome, Edge ou Safari) et parler | Le bouton pulse en rouge, le texte dicté apparaît dans le champ, le message part à la fin de la phrase ; Manu répond | À tester |  |
+| 21.21 | Micro sur Firefox | Bouton grisé avec l'info-bulle « La dictée vocale n'est pas disponible sur ce navigateur » | À tester |  |
+| 21.22 | Activer le haut-parleur | Chaque réponse de Manu est lue à voix haute dans sa langue (voix du système) ; le choix est gardé ; rouvrir ou fermer Manu coupe la lecture | À tester |  |
+| 21.23 | Site en français, écrire « Hello, how much does the programme cost? » | Manu répond en anglais ; écrire ensuite « Y en español, ¿cuánto cuesta? » : réponse en espagnol ; une réponse rapide cliquée reste dans la dernière langue détectée | À tester |  |
+| 21.24 | Écrire en arabe, russe ou chinois | La langue est reconnue à l'écriture ; Manu répond dans cette langue | À tester |  |
+| 21.25 | Changer la langue de l'interface pendant une conversation | Manu repasse dans la langue de l'interface jusqu'au prochain message écrit dans une autre langue | À tester |  |
+| 21.26 | Back-office › Manu AI › Paramètres | Un champ « message d'accueil » par langue (dix) ; base de connaissances : réponses éditables dans les dix langues | À tester |  |
+| 21.27 | À discuter | Voix et dictée sont celles du navigateur (lingala et swahili souvent absents des voix système) ; moteur vocal serveur prévu dans un lot ultérieur (Q9) | À discuter |  |
+
+**Lot 7 · Un consultant, quand vous voulez**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.28 | Cliquer « Cliquez ici » sur la carte du bas, sans être connecté | Fenêtre en bois « Que pouvons-nous faire pour vous ? » : nom, pays (liste), téléphone ou WhatsApp, e-mail, besoin, canal souhaité (WhatsApp, appel, e-mail), consentement ; aucun tarif | À tester |  |
+| 21.29 | Envoyer vide | Erreurs : nom requis, téléphone ou e-mail requis, besoin trop court, consentement obligatoire | À tester |  |
+| 21.30 | Envoyer une demande valide | Remerciement avec le prénom, numéro de demande « DC-2026-000X », mention « sous 24 h ouvrées par WhatsApp » ; petite pluie de cauris | À tester |  |
+| 21.31 | Back-office › Messages | Nouveau fil « Demande de consultation » (étiquette terre), non assigné, avec le besoin, les coordonnées, le canal et la langue ; le responsable l'assigne comme les autres ; délai suivi | À tester |  |
+| 21.32 | Connecté en fellow, ouvrir la carte | Formulaire pré-rempli (nom, e-mail, téléphone) et encart « Vous êtes connecté : réservez directement un créneau » vers la page Consultant | À tester |  |
+| 21.33 | Journal d'audit (Équipe & rôles) | Ligne « Demande de consultation DC-2026-000X » | À tester |  |
+
+**Lot 8 · Dix langues**
+
+| # | Action | Attendu | Résultat | Remarque |
+| --- | --- | --- | --- | --- |
+| 21.34 | Sélecteur de langue | Dix entrées : Français, English, Deutsch, Español, Русский, Lingála, Kiswahili, Português, 中文, العربية ; drapeau devant chacune | À tester |  |
+| 21.35 | Passer en arabe | Toute la page bascule de droite à gauche : menu, en-tête, cartes, formulaires, Manu (fenêtre en bas à gauche), carte consultant ; les chiffres et les sigles (KEC, OHADA, RCCM) restent lisibles | À tester |  |
+| 21.36 | Parcours complet en arabe : accueil, salle d'attente, inscription, connexion fellow, dossier, coffre, paiements, messages | Aucun texte coupé, aucune clé brute, boutons alignés à droite | À tester |  |
+| 21.37 | Passer en chinois puis en russe | Polices système correctes, tailles de boutons adaptées aux textes plus longs (russe) ou plus courts (chinois) | À tester |  |
+| 21.38 | Espace équipe dans une des sept nouvelles langues | Menus et écrans internes en français (volontaire : l'équipe travaille en français) | À tester |  |
+| 21.39 | `npm run build` | Le contrôle i18n passe (`✓` pour les dix langues) avant la compilation | À tester |  |
+| 21.40 | À discuter | Les sept nouvelles traductions ont été rédigées par Seira sans relecture native (Q10) : prévoir une relecture par langue avant mise en ligne, en commençant par le lingala et le swahili | À discuter |  |
+| 21.41 | Survoler « Accueil ▾ » puis descendre lentement vers « Le programme » et cliquer | Le menu reste ouvert pendant la descente (pont invisible + fermeture différée de 250 ms) ; depuis n'importe quelle page, le clic mène à la section voulue de l'accueil | À tester |  |
+| 21.42 | Salle d'attente, observer 35 s | Le banc est vide à l'ouverture ; toutes les 5 s la porte s'ouvre et une personne entre et s'assoit, jusqu'à six ; parmi elles une femme en boubou, un homme blanc en veste, un homme chinois en tangzhuang, une femme aux tresses, un aîné aux cheveux gris | À tester |  |
+| 21.43 | Petits titres en capitales (accueil, salle d'attente, programme, espace fellow…) | Un petit cauris doré remplace le tiret horizontal devant chaque petit titre, partout sur le site (y compris en arabe) | À tester |  |
+| 21.44 | Accueil ou salle d'attente, attendre 1 à 2 min | Des cauris tombent par petits groupes (2 à 5 toutes les 5 à 10 s) et s'entassent en bas ; quand il y en a assez (40 sur bureau, 18 sur téléphone, ou 12 après 90 s), une rafale de poussière traverse l'écran de gauche à droite ou l'inverse : traînées de sable, voile ocre qui avance avec le vent, les cauris sont soulevés les uns après les autres du côté d'où vient le vent, roulent et sortent de l'écran ; puis la pluie reprend et le cycle recommence (au moins 20 s entre deux rafales) | À tester |  |
+| 21.45 | Rafale en cours, changer de page | Le vent et la poussière s'arrêtent net, les cauris encore posés s'effacent | À tester |  |
+| 21.46 | Réglage système « réduire les animations » | Ni pluie ambiante ni rafale | À tester |  |
 
 ## 20. Questions à trancher avec la cliente
 
@@ -328,7 +418,7 @@ Ces choix sont implémentés avec une valeur provisoire ; chacun se change en un
 | Q1 | Durée du programme SCALE 110 | 6 mois (le cahier des charges dit 3) | Quelle est la durée officielle ? |  |
 | Q2 | Prix du programme | 300 000 FCFA par entreprise | Confirmé ? TVA incluse ? |  |
 | Q3 | Échéancier | Deux tranches de 50 % : acompte à la sélection, solde avant la formalisation | Paiement unique ou en tranches ? Quel acompte ? Quand le solde ? |  |
-| Q4 | Tarif consultant | 15 000 FCFA / heure, minimum 30 min, créneaux de 30 à 120 min | Tarif réel ? Varie-t-il selon le consultant ? |  |
+| Q4 | Tarif consultant | 15 000 FCFA / heure dans la réservation fellow (minimum 30 min, créneaux de 30 à 120 min) ; plus aucun tarif sur la carte publique | Tarif réel ? Varie-t-il selon le consultant ? |  |
 | Q5 | Annulation d'une consultation | Avoir intégral à plus de 24 h, 50 % retenus en deçà, remboursement total si KEC annule | Délai, pourcentage, avoir ou remboursement ? Et si le consultant est absent ? |  |
 | Q6 | Rôles de l'équipe | Administrateur, responsable, chargé(e) de dossiers, consultant, lecture seule | Correspond à l'organisation ? Qui confirme les virements et certifie les comptes ? |  |
 | Q7 | Délai de réponse humaine | 4 h ouvrées, horaires 8 h – 18 h | Jours et heures ouvrés de KEC ? |  |
@@ -338,6 +428,12 @@ Ces choix sont implémentés avec une valeur provisoire ; chacun se change en un
 | Q11 | Pays ouverts | Cameroun seul ; autres pays OHADA « bientôt » | Ordre d'ouverture ? |  |
 | Q12 | Coordonnées bancaires, numéros MoMo et OM, logo | Fictifs | Les vraies valeurs et le logo officiel |  |
 | Q13 | Formes juridiques et devis | EI, SARLU, SARL, SAS, SASU, SA, GIE avec frais indicatifs | Grille tarifaire réelle par forme et par ville ? |  |
+| Q14 | Repères des 54 pays du globe | Rédigés par Seira, marqués « à valider » | La cliente valide ou corrige chaque fiche (`src/data/africaFacts.js`) |  |
+| Q15 | Liens des sept réseaux sociaux | Vides (icônes « bientôt ») | Les adresses des comptes KEC (`socials` dans `app.config.js`) |  |
+| Q16 | Proverbes et pays d'origine | 55 proverbes, attributions proposées | Garder, corriger ou retirer certaines attributions |  |
+| Q17 | Relecture des sept nouvelles langues | Traductions faites sans locuteur natif | Qui relit quoi, et avant quelle date ? |  |
+| Q18 | Délai de rappel d'une demande de consultation | 24 h ouvrées, fil assigné par le responsable | Délai réel ? Qui reçoit les demandes ? |  |
+| Q19 | Comptes clients en libre-service | Non livré (lot 9) | Inscription libre ou comptes créés par KEC après sélection ? |  |
 
 **Relevé des retours de la séance**
 

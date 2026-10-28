@@ -122,13 +122,28 @@ Manu AI : en mode http, `api.assistant.send()` appelle `POST /assistant/messages
 
 ## 6. Langues
 
-V1 : **français, anglais, allemand** (détection automatique du navigateur, choix mémorisé).
-Swahili, espagnol et chinois sont déjà déclarés dans `src/config/app.config.js` (désactivés).
+Dix langues sont activées (`src/config/app.config.js`) : français (défaut et langue de
+secours), anglais, allemand, espagnol, russe, lingala, swahili, portugais, chinois et
+arabe (sens droite-à-gauche, `dir="rtl"` posé sur `<html>` par `src/i18n/index.js`).
+
+- `fr`, `en`, `de` : traduction complète (930 clés, back-office compris).
+- Les sept autres : espace public, espace fellow et Kia traduits (617 clés) ; les
+  écrans internes de l'équipe (`bo.*`, `team.*`) restent en français.
+- Textes rédigés par KEC à partir du français : **relecture par un locuteur natif à
+  prévoir** avant mise en ligne (lingala et swahili en priorité).
+- Manu répond dans la langue du message (`src/services/mock/manuEngine.js`,
+  `detectLocale`) ; ses réponses sont dans `src/services/mock/manuKnowledge.js`.
+- Les composants utilisent des propriétés CSS logiques (`margin-inline-start`…)
+  pour que l'arabe se lise correctement sans feuille de style dédiée.
+
+Contrôle : `npm run check:i18n` (lancé automatiquement avant `npm run build`) vérifie
+qu'aucune langue activée ne manque, qu'aucun tiret long ne traîne et que les variables
+`{x}` correspondent au français.
 
 Ajouter une langue :
-1. Copier `src/i18n/locales/fr.json` en `sw.json` et traduire.
-2. Activer `sw` dans `ENABLED_LOCALES` (`src/config/app.config.js`).
-3. Optionnel : ajouter les réponses de Manu dans `manuKnowledge.js`.
+1. Copier `src/i18n/locales/fr.json` en `<code>.json` et traduire.
+2. Activer `<code>` dans `locales` (`src/config/app.config.js`, avec `dir: 'rtl'` si besoin).
+3. Ajouter les réponses de Manu dans `manuKnowledge.js` (sinon repli sur l'anglais).
 
 Les fichiers de langue sont chargés à la demande (aucun poids ajouté au premier chargement).
 

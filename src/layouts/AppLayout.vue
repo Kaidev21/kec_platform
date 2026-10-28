@@ -76,7 +76,7 @@ async function logout() {
           <span class="avatar">{{ initials(auth.user?.name) }}</span>
           <div>
             <strong>{{ auth.user?.name }}</strong>
-            <small v-if="auth.user?.fellowNumber">Fellow #{{ String(auth.user.fellowNumber).padStart(3, '0') }} / 110</small>
+            <small v-if="auth.user?.fellowNumber">{{ $t('app.fellowOf', { n: String(auth.user.fellowNumber).padStart(3, '0') }) }}</small>
             <small v-else-if="auth.user?.title">{{ auth.user.title }} · {{ $t(`team.roles.${auth.user.teamRole}`) }}</small>
           </div>
         </div>
@@ -100,12 +100,12 @@ async function logout() {
 .app { min-height: 100vh; display: grid; grid-template-columns: 1fr; @include md-up { grid-template-columns: 260px 1fr; } }
 
 .side {
-  position: fixed; z-index: 80; left: 0; right: 0; bottom: 0;
+  position: fixed; z-index: 80; inset-inline-start: 0; inset-inline-end: 0; bottom: 0;
   background-color: var(--kec-walnut-deep); @include wood-grain(.55);
   border-top: 1px solid var(--kec-border);
   @include md-up {
     position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 1rem;
-    padding: 1.5rem 1rem; border-top: 0; border-right: 1px solid var(--kec-border);
+    padding: 1.5rem 1rem; border-top: 0; border-inline-end: 1px solid var(--kec-border);
   }
 }
 .logo, .space-tag, .side-foot { display: none; @include md-up { display: block; } }
@@ -120,7 +120,7 @@ async function logout() {
   position: relative; flex: 1 0 64px;
   display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: .45rem .5rem; border-radius: 12px;
   color: var(--kec-text-muted); font-size: .66rem; font-weight: 700; transition: all .25s; min-width: 0;
-  .count { position: absolute; top: 2px; right: 8px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; display: grid; place-items: center; font-size: .66rem; background: var(--kec-laterite); color: #fff; @include md-up { position: static; margin-left: auto; } }
+  .count { position: absolute; top: 2px; inset-inline-end: 8px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; display: grid; place-items: center; font-size: .66rem; background: var(--kec-laterite); color: #fff; @include md-up { position: static; margin-inline-start: auto; } }
   .ico { font-size: 1.15rem; line-height: 1; }
   @include md-up { flex-direction: row; gap: .85rem; padding: .75rem .9rem; font-size: .92rem; .ico { width: 22px; text-align: center; } }
   &:hover { color: var(--kec-ivory); background: rgba(255, 255, 255, .04); }
@@ -128,7 +128,7 @@ async function logout() {
 }
 .lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 64px; @include md-up { max-width: none; } }
 .side-foot { margin-top: auto; }
-.logout { background: none; border: 1px solid var(--kec-border); color: var(--kec-text-muted); padding: .55rem .9rem; border-radius: 12px; width: 100%; text-align: left; &:hover { color: var(--kec-ivory); border-color: var(--kec-gold); } }
+.logout { background: none; border: 1px solid var(--kec-border); color: var(--kec-text-muted); padding: .55rem .9rem; border-radius: 12px; width: 100%; text-align: start; &:hover { color: var(--kec-ivory); border-color: var(--kec-gold); } }
 .mobile-only { width: auto; @include md-up { display: none; } }
 
 .content { min-width: 0; padding-bottom: 5rem; @include md-up { padding-bottom: 0; } }

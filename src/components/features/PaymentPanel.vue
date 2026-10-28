@@ -137,6 +137,6 @@ async function pay() {
 @keyframes ping { from { opacity: 1; transform: scale(.9); } to { opacity: 0; transform: scale(1.3); } }
 .check { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 1.8rem; color: #1a110b; background: radial-gradient(circle at 35% 30%, #d9f0b0, #8fa35a); animation: pop .6s var(--ease-spring); }
 @keyframes pop { from { transform: scale(0); } }
-.transfer dl { margin: 0; display: grid; div { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem 0; border-bottom: 1px dashed var(--kec-border); font-size: .88rem; } dt { color: var(--kec-text-muted); } dd { margin: 0; font-weight: 700; text-align: right; word-break: break-all; } }
+.transfer dl { margin: 0; display: grid; div { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem 0; border-bottom: 1px dashed var(--kec-border); font-size: .88rem; } dt { color: var(--kec-text-muted); } dd { margin: 0; font-weight: 700; text-align: end; word-break: break-all; } }
 .small { font-size: .82rem; }
 </style>

@@ -43,6 +43,8 @@ export async function setLocale(code) {
   }
   i18n.global.locale.value = code
   document.documentElement.lang = code
+  // Sens d'écriture : l'arabe se lit de droite à gauche (dir déclaré dans app.config.js)
+  document.documentElement.dir = ENABLED_LOCALES.find((l) => l.code === code)?.dir ?? 'ltr'
   try { localStorage.setItem(STORAGE_KEY, code) } catch { /* ignore */ }
 }
 

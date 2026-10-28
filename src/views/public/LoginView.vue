@@ -102,10 +102,10 @@ const fillDemo = () => Object.assign(form, DEMO[props.audience])
 blockquote { margin: 0; max-width: 34ch; text-align: center; font-family: var(--font-display); font-style: italic; font-size: 1.3rem; color: var(--kec-gold-soft); }
 .panel { padding: clamp(1.5rem, 4vw, 2.5rem); h1 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); } }
 .stack > * + * { margin-top: 1.1rem; }
-.pwd { position: relative; .k-input { padding-right: 3rem; } }
-.eye { position: absolute; right: .5rem; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--kec-gold); font-size: 1.1rem; padding: .3rem .5rem; }
+.pwd { position: relative; .k-input { padding-inline-end: 3rem; } }
+.eye { position: absolute; inset-inline-end: .5rem; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--kec-gold); font-size: 1.1rem; padding: .3rem .5rem; }
 .demo { margin-top: 1.5rem; padding: .9rem 1rem; border-radius: 14px; border: 1px dashed rgba(214, 165, 72, .45); display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; font-size: .82rem; color: var(--kec-text-muted);
   code { color: var(--kec-ivory); background: rgba(0, 0, 0, .25); padding: .15rem .45rem; border-radius: 6px; }
-  button { margin-left: auto; background: none; border: 0; color: var(--kec-gold-soft); font-weight: 700; text-decoration: underline; } }
+  button { margin-inline-start: auto; background: none; border: 0; color: var(--kec-gold-soft); font-weight: 700; text-decoration: underline; } }
 .not-yet { margin-top: 1.25rem; font-size: .9rem; color: var(--kec-text-muted); }
 </style>

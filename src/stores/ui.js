@@ -13,6 +13,8 @@ export const useUiStore = defineStore('ui', () => {
   const rainAmount = ref(60)
   const manuOpen = ref(false)
   const consultantBarDismissed = ref(false)
+  const consultOpen = ref(false) // carte « Que pouvons-nous faire pour vous ? »
+  const cowriesSettle = ref(false) // true sur l'accueil et la salle d'attente : les cauris s'entassent en bas
 
   function toast(message, { type = 'info', timeout = 4200, icon = null } = {}) {
     const id = ++toastId
@@ -28,5 +30,5 @@ export const useUiStore = defineStore('ui', () => {
     rainRequest.value++
   }
 
-  return { toasts, toast, dismiss, rainRequest, rainAmount, rainCowries, manuOpen, consultantBarDismissed }
+  return { toasts, toast, dismiss, rainRequest, rainAmount, rainCowries, manuOpen, consultantBarDismissed, consultOpen, cowriesSettle }
 })

@@ -159,6 +159,6 @@ const unreadMessages = computed(() => data.value?.threads.reduce((s, t) => s + (
 .date { padding: .6rem .8rem; border-radius: 12px; background: var(--kec-cowrie); color: #2a1a12; font-weight: 800; text-transform: capitalize; font-size: .85rem; text-align: center; }
 .paid strong { font-family: var(--font-display); font-size: 1.6rem; color: var(--kec-gold-soft); }
 .meter { width: 100%; height: 10px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden; span { display: block; height: 100%; background: linear-gradient(90deg, var(--kec-laterite), var(--kec-gold)); } }
-.kopen-strip { display: flex; align-items: center; gap: .8rem; padding: 1rem 1.25rem; border-radius: var(--radius); border: 1px dashed var(--kec-gold); background: rgba(214,165,72,.06); color: var(--kec-ivory); font-weight: 600; text-align: left; .go { margin-left: auto; color: var(--kec-gold); } &:hover { background: rgba(214,165,72,.12); } }
+.kopen-strip { display: flex; align-items: center; gap: .8rem; padding: 1rem 1.25rem; border-radius: var(--radius); border: 1px dashed var(--kec-gold); background: rgba(214,165,72,.06); color: var(--kec-ivory); font-weight: 600; text-align: start; .go { margin-inline-start: auto; color: var(--kec-gold); } &:hover { background: rgba(214,165,72,.12); } }
 .celebrate { justify-self: start; background: none; border: 0; color: var(--kec-text-muted); font-size: .8rem; &:hover { color: var(--kec-gold-soft); } }
 </style>
