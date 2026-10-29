@@ -10,9 +10,10 @@ import KButton from '@/components/ui/KButton.vue'
 
 const props = defineProps({ entry: { type: Object, required: true }, total: { type: Number, default: 0 }, seats: { type: Number, default: 110 } })
 const { t } = useI18n()
-const shareText = computed(() => t('ticket.shareText', { url: `${window.location.origin}/salle-d-attente?ref=${props.entry.ticket}` }))
+const waitingUrl = `${window.location.origin}${import.meta.env.BASE_URL}salle-d-attente`
+const shareText = computed(() => t('ticket.shareText', { url: `${waitingUrl}?ref=${props.entry.ticket}` }))
 const whatsapp = computed(() => `https://wa.me/?text=${encodeURIComponent(shareText.value)}`)
-const linkedin = computed(() => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${window.location.origin}/salle-d-attente`)}`)
+const linkedin = computed(() => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(waitingUrl)}`)
 </script>
 
 <template>

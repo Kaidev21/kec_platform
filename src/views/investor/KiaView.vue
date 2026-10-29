@@ -40,7 +40,7 @@ const channels = computed(() => kpi.value?.channels.slice(0, 6).map((c) => ({ la
 
 function notify(text) {
   navigator.vibrate?.([60, 40, 60])
-  if (notifyOn.value && document.hidden) new Notification('KEC · Kia', { body: text, icon: '/favicon.svg' })
+  if (notifyOn.value && document.hidden) new Notification('KEC · Kia', { body: text, icon: `${import.meta.env.BASE_URL}favicon.svg` })
 }
 
 useLiveEvents((e) => {

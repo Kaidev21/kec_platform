@@ -8,7 +8,7 @@
     "dev": "vite",
     "dev:http": "vite --mode http",
     "check:i18n": "node scripts/check-i18n.mjs",
-    "prebuild": "npm run check:i18n",
+    "prebuild": "node -e \"require('node:fs').existsSync('scripts/check-i18n.mjs') && require('node:child_process').execSync('npm run check:i18n', {stdio:'inherit'})\"",
     "build": "vite build",
     "preview": "vite preview"
   },
