@@ -332,6 +332,7 @@
   "manu": {
     "title": "Chat with Manu AI",
     "open": "Talk to Manu, the receptionist",
+    "dragHint": "Drag me to move me · double-click the header to put me back",
     "role": "Receptionist · online",
     "teaserTitle": "Akwaba!",
     "teaser": "I'm Manu. Got a question? I'm here.",

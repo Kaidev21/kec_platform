@@ -19,7 +19,7 @@
  * Le vent 🌬️ : quand assez de cauris se sont entassés (40 sur bureau, 18 sur
  * téléphone, ou 12 après 90 s), une rafale de poussière de latérite traverse
  * l'écran, de gauche à droite ou l'inverse. On la voit (volutes et grains de
- * sable, voile poussiéreux qui avance avec elle, jamais de traits) et on voit ses effets : le front de vent
+ * sable, voile poussiéreux qui avance avec elle, jamais de traits), dans le quart bas de l'écran et on voit ses effets : le front de vent
  * soulève les cauris posés les uns après les autres, du côté d'où il vient,
  * et les roule hors de l'écran où ils disparaissent. Puis la pluie reprend,
  * la pile se reforme, et le vent revient.
@@ -82,7 +82,7 @@ function emitDust(speed) {
     dust.push({
       puff,
       x: Math.random() * w,
-      y: h - Math.random() * h * (puff ? 0.42 : 0.5) - 4,
+      y: h - Math.random() * h * (puff ? 0.21 : 0.25) - 4, // le quart bas de l'écran seulement
       vx: speed * (puff ? 0.45 + Math.random() * 0.4 : 0.6 + Math.random() * 0.7),
       vy: (Math.random() - 0.5) * (puff ? 0.35 : 0.7),
       width: puff ? 18 + Math.random() * 40 : 0.7 + Math.random() * 1.1,
@@ -106,7 +106,7 @@ function drawWind(now) {
   haze.addColorStop(0, 'rgba(192, 97, 47, 0)')
   haze.addColorStop(0.55, `rgba(232, 206, 160, ${0.3 * env})`)
   haze.addColorStop(1, 'rgba(192, 97, 47, 0)')
-  const floorHaze = ctx.createLinearGradient(0, h * 0.4, 0, h)
+  const floorHaze = ctx.createLinearGradient(0, h * 0.7, 0, h) // le voile ne monte pas au-dessus du tiers bas
   floorHaze.addColorStop(0, 'rgba(0,0,0,0)'); floorHaze.addColorStop(1, 'rgba(0,0,0,1)')
   ctx.save()
   ctx.fillStyle = haze; ctx.fillRect(0, 0, w, h)

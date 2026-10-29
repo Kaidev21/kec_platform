@@ -5,7 +5,7 @@
  *  - space="staff"  : back-office de l'équipe KEC
  * Barre latérale en bois, en-tête utilisateur, navigation mobile en bas.
  */
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
@@ -51,6 +51,14 @@ async function logout() {
   await auth.logout()
   router.push({ name: 'home' })
 }
+
+/* Barre d'onglets mobile : si elle déborde, on affiche un voile à droite */
+const menuEl = ref(null)
+const scrollable = ref(false)
+let menuRo
+function measureMenu() { const el = menuEl.value; scrollable.value = !!el && el.scrollWidth > el.clientWidth + 4 }
+onMounted(() => { measureMenu(); menuRo = new ResizeObserver(measureMenu); if (menuEl.value) menuRo.observe(menuEl.value) })
+onBeforeUnmount(() => menuRo?.disconnect())
 </script>
 
 <template>
@@ -58,7 +66,7 @@ async function logout() {
     <aside class="side">
       <RouterLink to="/" class="logo"><KecLogo :size="38" /></RouterLink>
       <span class="space-tag">{{ spaceLabel }}</span>
-      <nav class="menu" :aria-label="spaceLabel">
+      <nav ref="menuEl" class="menu" :class="{ scrollable }" :aria-label="spaceLabel">
         <RouterLink v-for="i in items" :key="i.to" :to="{ name: i.to }" class="item" exact-active-class="on">
           <span class="ico" aria-hidden="true">{{ i.icon }}</span>
           <span class="lbl">{{ $t(`app.nav.${i.key}`) }}</span>
@@ -114,19 +122,22 @@ async function logout() {
 .menu {
   display: flex; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; padding: .35rem .25rem calc(.35rem + env(safe-area-inset-bottom));
   &::-webkit-scrollbar { display: none; }
+  scroll-snap-type: x proximity;
+  /* Sur téléphone, un voile à droite signale qu'il reste des onglets à faire défiler */
+  &.scrollable::after { content: ''; position: sticky; inset-inline-end: 0; flex: 0 0 22px; margin-inline-start: -22px; pointer-events: none; background: linear-gradient(to right, transparent, var(--kec-walnut-deep)); :dir(rtl) & { background: linear-gradient(to left, transparent, var(--kec-walnut-deep)); } }
   @include md-up { flex-direction: column; justify-content: flex-start; gap: .25rem; padding: 0; overflow: visible; }
 }
 .item {
-  position: relative; flex: 1 0 64px;
-  display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: .45rem .5rem; border-radius: 12px;
-  color: var(--kec-text-muted); font-size: .66rem; font-weight: 700; transition: all .25s; min-width: 0;
+  position: relative; flex: 1 0 54px;
+  display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: .45rem .3rem; border-radius: 12px; scroll-snap-align: start;
+  color: var(--kec-text-muted); font-size: .62rem; font-weight: 700; transition: all .25s; min-width: 0;
   .count { position: absolute; top: 2px; inset-inline-end: 8px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; display: grid; place-items: center; font-size: .66rem; background: var(--kec-laterite); color: #fff; @include md-up { position: static; margin-inline-start: auto; } }
   .ico { font-size: 1.15rem; line-height: 1; }
   @include md-up { flex-direction: row; gap: .85rem; padding: .75rem .9rem; font-size: .92rem; .ico { width: 22px; text-align: center; } }
   &:hover { color: var(--kec-ivory); background: rgba(255, 255, 255, .04); }
   &.on { color: #2a1a12; background: radial-gradient(120% 140% at 30% 0%, #fffaf0, #ecdcbc 55%, #d4b98c); box-shadow: 0 8px 20px -10px rgba(239, 227, 201, .5); }
 }
-.lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 64px; @include md-up { max-width: none; } }
+.lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 58px; @include md-up { max-width: none; font-size: .92rem; } }
 .side-foot { margin-top: auto; }
 .logout { background: none; border: 1px solid var(--kec-border); color: var(--kec-text-muted); padding: .55rem .9rem; border-radius: 12px; width: 100%; text-align: start; &:hover { color: var(--kec-ivory); border-color: var(--kec-gold); } }
 .mobile-only { width: auto; @include md-up { display: none; } }

@@ -107,12 +107,12 @@ const hands = computed(() => {
 .scene { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 
 /* ── Plafond ── */
-.fan { position: absolute; left: 60%; top: 1rem; width: 110px; opacity: .85; @include md-up { width: 150px; left: 36%; }
+.fan { position: absolute; left: 60%; top: 1rem; width: 110px; opacity: .85; @include md-down { top: 4.6rem; left: 8%; } @include md-up { width: 150px; left: 36%; }
   .blades { transform-origin: 100px 100px; animation: fan-spin 2.6s linear infinite; }
   ellipse { transform-origin: 100px 100px; animation: fan-shadow 2.6s linear infinite; } }
 @keyframes fan-spin { to { transform: rotate(360deg); } }
 @keyframes fan-shadow { 50% { opacity: .35; } }
-.clock { position: absolute; right: 6%; top: 1.6rem; width: 54px; @include lg-up { right: 28%; width: 68px; }
+.clock { position: absolute; right: 6%; top: 1.6rem; width: 54px; @include md-down { top: 5rem; right: 5%; } @include lg-up { right: 28%; width: 68px; }
   .sec { transition: transform .15s cubic-bezier(.4, 2.2, .6, 1); } }
 
 /* ── Fenêtre ── */
@@ -127,7 +127,7 @@ const hands = computed(() => {
 @keyframes curtain { 50% { transform: skewX(-4deg) translateX(3px); } }
 
 /* ── Lampe ── */
-.lamp { position: absolute; left: 50%; top: 0; width: 2px; height: 90px; background: #1a110b; transform-origin: top center; animation: lamp-sway 6s ease-in-out infinite;
+.lamp { position: absolute; left: 50%; top: 0; width: 2px; height: 90px; @include md-down { height: 128px; .shade { top: 126px; } .fly { top: 138px; } } background: #1a110b; transform-origin: top center; animation: lamp-sway 6s ease-in-out infinite;
   .shade { position: absolute; left: -22px; top: 88px; width: 46px; height: 26px; border-radius: 50% 50% 8px 8px; background: radial-gradient(circle at 50% 120%, #fff1c9, #d6a548 50%, #8b5a34); box-shadow: 0 30px 80px 30px rgba(240, 190, 100, .25); animation: flicker 7s ease-in-out infinite; }
   .fly { position: absolute; left: -6px; top: 100px; width: 14px; animation: fly-around 3.2s linear infinite; } }
 @keyframes lamp-sway { 50% { transform: rotate(2.5deg); } }

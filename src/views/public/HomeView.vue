@@ -226,7 +226,7 @@ function onFormed() {
 .hero-copy h1 { max-width: 16ch; text-shadow: 0 4px 30px rgba(0, 0, 0, .35); font-size: clamp(2rem, 5vw, 4rem); }
 .lead { max-width: 52ch; font-size: clamp(1rem, 1.6vw, 1.15rem); color: #f6e7d3; }
 .ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.75rem 0 1.25rem; }
-.live { display: inline-flex; align-items: center; gap: .6rem; font-size: .88rem; color: #f6e7d3; margin: 0; }
+.live { display: inline-flex; align-items: flex-start; gap: .6rem; font-size: .88rem; color: #f6e7d3; margin: 0; .pulse { margin-top: .45em; flex-shrink: 0; } }
 .pulse { width: 9px; height: 9px; border-radius: 50%; background: #8fbf5a; box-shadow: 0 0 0 0 rgba(143, 191, 90, .6); animation: live 1.8s infinite; }
 @keyframes live { 70% { box-shadow: 0 0 0 10px rgba(143, 191, 90, 0); } 100% { box-shadow: 0 0 0 0 rgba(143, 191, 90, 0); } }
 .scroll-cue { position: absolute; z-index: 2; left: 50%; bottom: 1.4rem; width: 26px; height: 42px; border: 2px solid rgba(245, 236, 219, .5); border-radius: 20px; transform: translateX(-50%); display: none; @include md-up { display: block; }

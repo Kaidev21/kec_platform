@@ -127,7 +127,7 @@ const methodLabel = (m) => (m === 'bank' ? t('payment.bank') : METHOD[m] ?? m)
 
 <style scoped lang="scss">
 .payments { display: grid; gap: 1.25rem; h1 { margin: 0; } }
-.cols { display: grid; gap: 1.25rem; @include lg-up { grid-template-columns: 1.45fr 1fr; align-items: start; } }
+.cols { display: grid; gap: 1.25rem; grid-template-columns: minmax(0, 1fr); > * { min-width: 0; } @include lg-up { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: start; } }
 .main { display: grid; gap: 1.25rem; }
 .box { padding: 1.5rem; }
 .plan-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: flex-start; h3 { margin-bottom: .2rem; } p { margin: 0; font-size: .88rem; } }

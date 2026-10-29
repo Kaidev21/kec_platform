@@ -13,7 +13,7 @@
  *   Manu détecte la langue de chaque message et répond dans cette langue.
  *   Sur un navigateur sans ces API, les boutons se désactivent proprement.
  */
-import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAssistantStore } from '@/stores/assistant'
@@ -83,6 +83,7 @@ watch(() => store.messages.length, () => { const m = store.messages.at(-1); if (
 onBeforeUnmount(() => { recognition?.abort?.(); if (ttsSupported) window.speechSynthesis.cancel() })
 
 async function open() {
+  if (swallowClick) return // on vient de la déplacer, ce n'est pas un clic
   ui.manuOpen = true
   teaser.value = false
   await store.greet()
@@ -107,22 +108,71 @@ watch(() => [store.messages.length, store.typing], async () => {
 })
 watch(() => ui.manuOpen, (o) => { if (o) store.greet() })
 
-// Petite bulle d'invitation après quelques secondes (une fois par session)
+// Petite bulle d'invitation après quelques secondes (une fois par session), qui se referme toute seule
 onMounted(() => {
   if (sessionStorage.getItem('kec.manuTeased')) return
   setTimeout(() => {
     if (!ui.manuOpen) teaser.value = true
     sessionStorage.setItem('kec.manuTeased', '1')
+    setTimeout(() => { teaser.value = false }, 9000)
   }, 6500)
 })
+
+/* ── Manu se déplace : on la prend (souris ou doigt) par son avatar, ou par l'en-tête de la fenêtre ──
+   Le point d'ancrage est le coin bas-droit (distance aux bords, en px), mémorisé dans localStorage.
+   Sans ancrage, la position par défaut vient du CSS (et suit le sens d'écriture). */
+const POS_KEY = 'kec.manuPos'
+const anchor = ref((() => { try { const a = JSON.parse(localStorage.getItem(POS_KEY) || 'null'); return a && Number.isFinite(a.right) && Number.isFinite(a.bottom) ? a : null } catch { return null } })())
+const narrow = ref(typeof window !== 'undefined' && window.matchMedia('(max-width: 599px)').matches)
+const avatarSize = computed(() => (narrow.value ? 50 : 58))
+const EDGE = 8
+const clampAnchor = (a, w, h) => ({ right: Math.round(Math.min(Math.max(EDGE, a.right), window.innerWidth - w - EDGE)), bottom: Math.round(Math.min(Math.max(EDGE, a.bottom), window.innerHeight - h - EDGE)) })
+const launcherStyle = computed(() => anchor.value ? { insetInlineEnd: 'auto', left: 'auto', right: `${anchor.value.right}px`, bottom: `${anchor.value.bottom}px` } : null)
+/* La fenêtre ouverte s'aligne sur le même coin (bureau et tablette seulement : sur téléphone elle prend toute la largeur) */
+const panelStyle = computed(() => {
+  if (!anchor.value || narrow.value) return null
+  const w = 400, h = Math.min(640, window.innerHeight - 16)
+  const a = clampAnchor(anchor.value, w, h)
+  return { insetInlineEnd: 'auto', left: 'auto', right: `${a.right}px`, bottom: `${a.bottom}px` }
+})
+let drag = null, swallowClick = false
+function grab(e) {
+  if (e.button != null && e.button !== 0) return
+  const el = e.currentTarget.closest('.launcher, .panel') ?? e.currentTarget
+  const r = el.getBoundingClientRect()
+  drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, right0: window.innerWidth - r.right, bottom0: window.innerHeight - r.bottom, w: r.width, h: r.height, moved: false }
+  e.currentTarget.setPointerCapture?.(e.pointerId)
+}
+function dragMove(e) {
+  if (!drag || e.pointerId !== drag.id) return
+  const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy
+  if (!drag.moved && Math.hypot(dx, dy) < 6) return
+  drag.moved = true
+  anchor.value = clampAnchor({ right: drag.right0 - dx, bottom: drag.bottom0 - dy }, drag.w, drag.h)
+  e.preventDefault()
+}
+function release(e) {
+  if (!drag || e.pointerId !== drag.id) return
+  const moved = drag.moved; drag = null
+  if (!moved) return
+  swallowClick = true; setTimeout(() => { swallowClick = false }, 80)
+  try { localStorage.setItem(POS_KEY, JSON.stringify(anchor.value)) } catch { /* mode privé */ }
+}
+function resetPos() { anchor.value = null; try { localStorage.removeItem(POS_KEY) } catch { /* ignore */ } }
+function onResize() {
+  narrow.value = window.matchMedia('(max-width: 599px)').matches
+  if (anchor.value) anchor.value = clampAnchor(anchor.value, 60, 60)
+}
+onMounted(() => window.addEventListener('resize', onResize))
+onBeforeUnmount(() => window.removeEventListener('resize', onResize))
 </script>
 
 <template>
   <div class="manu-widget" :class="{ open: ui.manuOpen }">
     <!-- Lanceur -->
     <Transition name="pop">
-      <button v-if="!ui.manuOpen" class="launcher" type="button" :aria-label="$t('manu.open')" @click="open">
-        <ManuAvatar :size="58" />
+      <button v-if="!ui.manuOpen" class="launcher" type="button" :style="launcherStyle" :aria-label="$t('manu.open')" :title="$t('manu.dragHint')" @click="open" @pointerdown="grab" @pointermove="dragMove" @pointerup="release" @pointercancel="release">
+        <ManuAvatar :size="avatarSize" />
         <Transition name="pop">
           <span v-if="teaser" class="teaser" @click.stop="open">
             <strong>{{ $t('manu.teaserTitle') }}</strong> {{ $t('manu.teaser') }}
@@ -133,8 +183,8 @@ onMounted(() => {
 
     <!-- Fenêtre de conversation -->
     <Transition name="panel">
-      <section v-if="ui.manuOpen" class="panel" role="dialog" :aria-label="$t('manu.title')">
-        <header class="head">
+      <section v-if="ui.manuOpen" class="panel" :class="{ moved: !!anchor }" :style="panelStyle" role="dialog" :aria-label="$t('manu.title')">
+        <header class="head" :title="$t('manu.dragHint')" @pointerdown="grab" @pointermove="dragMove" @pointerup="release" @pointercancel="release" @dblclick="resetPos">
           <ManuAvatar :size="46" />
           <div class="who">
             <strong>Manu AI</strong>
@@ -173,16 +223,19 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.manu-widget { position: fixed; z-index: 95; inset-inline-end: .9rem; bottom: 7rem; @include md-up { inset-inline-end: 1.5rem; bottom: 6rem; } }
+.manu-widget { position: fixed; z-index: 150; /* au-dessus de l'en-tête (100) : Manu peut être déplacée tout en haut */ inset-inline-end: .9rem; bottom: 5.4rem; @include md-up { inset-inline-end: 1.5rem; bottom: 6rem; } }
 .launcher {
   position: relative; background: none; border: 0; padding: 0; border-radius: 50%;
+  touch-action: none; cursor: grab; /* on peut la prendre et la déplacer */
+  &[style] { position: fixed; } /* déplacée : ancrée sur ses propres coordonnées */
+  &:active { cursor: grabbing; }
   animation: float 4s ease-in-out infinite;
   &::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(214, 165, 72, .5); animation: ring 2.8s ease-out infinite; }
 }
 @keyframes float { 50% { transform: translateY(-5px); } }
 @keyframes ring { from { transform: scale(.9); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
 .teaser {
-  position: absolute; inset-inline-end: calc(100% + .8rem); bottom: .5rem; width: 230px; text-align: start;
+  position: absolute; inset-inline-end: calc(100% + .8rem); bottom: .5rem; width: min(230px, calc(100vw - 110px)); text-align: start;
   padding: .75rem .9rem; border-radius: 16px 16px 4px 16px; font-size: .84rem; line-height: 1.4;
   background: var(--kec-ivory); color: #2a1a12; box-shadow: var(--shadow-soft);
   strong { display: block; font-family: var(--font-display); font-size: 1rem; }
@@ -197,7 +250,8 @@ onMounted(() => {
   @include sm-up { inset: auto; inset-inline-end: 1.5rem; bottom: 1.5rem; width: 400px; }
 }
 .head {
-  display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem;
+  display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem; user-select: none;
+  @include sm-up { touch-action: none; cursor: grab; &:active { cursor: grabbing; } }
   background-color: var(--kec-walnut-deep); @include wood-grain(.5);
   border-bottom: 1px solid var(--kec-border);
 }

@@ -332,6 +332,7 @@
   "manu": {
     "title": "Gespräch mit Manu AI",
     "open": "Mit Manu, der Empfangsdame, sprechen",
+    "dragHint": "Ziehen Sie mich, um mich zu verschieben · Doppelklick auf die Kopfzeile setzt mich zurück",
     "role": "Empfang · online",
     "teaserTitle": "Akwaba!",
     "teaser": "Ich bin Manu. Eine Frage? Ich bin da.",

@@ -39,7 +39,7 @@ export async function setLocale(code) {
   if (!ENABLED_LOCALES.some((l) => l.code === code)) code = APP_CONFIG.defaultLocale
   if (!i18n.global.availableLocales.includes(code)) {
     const loader = loaders[`./locales/${code}.json`]
-    i18n.global.setLocaleMessage(code, loader ? (await loader()).default : fr)
+    if (loader) i18n.global.setLocaleMessage(code, (await loader()).default)
   }
   i18n.global.locale.value = code
   document.documentElement.lang = code
